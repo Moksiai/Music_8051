@@ -1,0 +1,1224 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.2.0 #13081 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module proj
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _timer__index_65537_11
+                                     12 	.globl _read_Keyboard_Inputchar_65536_1
+                                     13 	.globl _decode
+                                     14 	.globl _tone
+                                     15 	.globl _main
+                                     16 	.globl _timer_
+                                     17 	.globl _timer_PLAY_tone
+                                     18 	.globl _read_Keyboard
+                                     19 	.globl _CY
+                                     20 	.globl _AC
+                                     21 	.globl _F0
+                                     22 	.globl _RS1
+                                     23 	.globl _RS0
+                                     24 	.globl _OV
+                                     25 	.globl _F1
+                                     26 	.globl _P
+                                     27 	.globl _PS
+                                     28 	.globl _PT1
+                                     29 	.globl _PX1
+                                     30 	.globl _PT0
+                                     31 	.globl _PX0
+                                     32 	.globl _RD
+                                     33 	.globl _WR
+                                     34 	.globl _T1
+                                     35 	.globl _T0
+                                     36 	.globl _INT1
+                                     37 	.globl _INT0
+                                     38 	.globl _TXD
+                                     39 	.globl _RXD
+                                     40 	.globl _P3_7
+                                     41 	.globl _P3_6
+                                     42 	.globl _P3_5
+                                     43 	.globl _P3_4
+                                     44 	.globl _P3_3
+                                     45 	.globl _P3_2
+                                     46 	.globl _P3_1
+                                     47 	.globl _P3_0
+                                     48 	.globl _EA
+                                     49 	.globl _ES
+                                     50 	.globl _ET1
+                                     51 	.globl _EX1
+                                     52 	.globl _ET0
+                                     53 	.globl _EX0
+                                     54 	.globl _P2_7
+                                     55 	.globl _P2_6
+                                     56 	.globl _P2_5
+                                     57 	.globl _P2_4
+                                     58 	.globl _P2_3
+                                     59 	.globl _P2_2
+                                     60 	.globl _P2_1
+                                     61 	.globl _P2_0
+                                     62 	.globl _SM0
+                                     63 	.globl _SM1
+                                     64 	.globl _SM2
+                                     65 	.globl _REN
+                                     66 	.globl _TB8
+                                     67 	.globl _RB8
+                                     68 	.globl _TI
+                                     69 	.globl _RI
+                                     70 	.globl _P1_7
+                                     71 	.globl _P1_6
+                                     72 	.globl _P1_5
+                                     73 	.globl _P1_4
+                                     74 	.globl _P1_3
+                                     75 	.globl _P1_2
+                                     76 	.globl _P1_1
+                                     77 	.globl _P1_0
+                                     78 	.globl _TF1
+                                     79 	.globl _TR1
+                                     80 	.globl _TF0
+                                     81 	.globl _TR0
+                                     82 	.globl _IE1
+                                     83 	.globl _IT1
+                                     84 	.globl _IE0
+                                     85 	.globl _IT0
+                                     86 	.globl _P0_7
+                                     87 	.globl _P0_6
+                                     88 	.globl _P0_5
+                                     89 	.globl _P0_4
+                                     90 	.globl _P0_3
+                                     91 	.globl _P0_2
+                                     92 	.globl _P0_1
+                                     93 	.globl _P0_0
+                                     94 	.globl _B
+                                     95 	.globl _ACC
+                                     96 	.globl _PSW
+                                     97 	.globl _IP
+                                     98 	.globl _P3
+                                     99 	.globl _IE
+                                    100 	.globl _P2
+                                    101 	.globl _SBUF
+                                    102 	.globl _SCON
+                                    103 	.globl _P1
+                                    104 	.globl _TH1
+                                    105 	.globl _TH0
+                                    106 	.globl _TL1
+                                    107 	.globl _TL0
+                                    108 	.globl _TMOD
+                                    109 	.globl _TCON
+                                    110 	.globl _PCON
+                                    111 	.globl _DPH
+                                    112 	.globl _DPL
+                                    113 	.globl _SP
+                                    114 	.globl _P0
+                                    115 	.globl _record_ntone
+                                    116 	.globl _record_lengh
+                                    117 	.globl _record_tone
+                                    118 	.globl _change
+                                    119 	.globl _silence
+                                    120 	.globl _play_tone
+                                    121 	.globl _replay_lengh
+                                    122 	.globl _replay_point
+                                    123 	.globl _show
+                                    124 	.globl _mode
+                                    125 	.globl _key
+                                    126 ;--------------------------------------------------------
+                                    127 ; special function registers
+                                    128 ;--------------------------------------------------------
+                                    129 	.area RSEG    (ABS,DATA)
+      000000                        130 	.org 0x0000
+                           000080   131 _P0	=	0x0080
+                           000081   132 _SP	=	0x0081
+                           000082   133 _DPL	=	0x0082
+                           000083   134 _DPH	=	0x0083
+                           000087   135 _PCON	=	0x0087
+                           000088   136 _TCON	=	0x0088
+                           000089   137 _TMOD	=	0x0089
+                           00008A   138 _TL0	=	0x008a
+                           00008B   139 _TL1	=	0x008b
+                           00008C   140 _TH0	=	0x008c
+                           00008D   141 _TH1	=	0x008d
+                           000090   142 _P1	=	0x0090
+                           000098   143 _SCON	=	0x0098
+                           000099   144 _SBUF	=	0x0099
+                           0000A0   145 _P2	=	0x00a0
+                           0000A8   146 _IE	=	0x00a8
+                           0000B0   147 _P3	=	0x00b0
+                           0000B8   148 _IP	=	0x00b8
+                           0000D0   149 _PSW	=	0x00d0
+                           0000E0   150 _ACC	=	0x00e0
+                           0000F0   151 _B	=	0x00f0
+                                    152 ;--------------------------------------------------------
+                                    153 ; special function bits
+                                    154 ;--------------------------------------------------------
+                                    155 	.area RSEG    (ABS,DATA)
+      000000                        156 	.org 0x0000
+                           000080   157 _P0_0	=	0x0080
+                           000081   158 _P0_1	=	0x0081
+                           000082   159 _P0_2	=	0x0082
+                           000083   160 _P0_3	=	0x0083
+                           000084   161 _P0_4	=	0x0084
+                           000085   162 _P0_5	=	0x0085
+                           000086   163 _P0_6	=	0x0086
+                           000087   164 _P0_7	=	0x0087
+                           000088   165 _IT0	=	0x0088
+                           000089   166 _IE0	=	0x0089
+                           00008A   167 _IT1	=	0x008a
+                           00008B   168 _IE1	=	0x008b
+                           00008C   169 _TR0	=	0x008c
+                           00008D   170 _TF0	=	0x008d
+                           00008E   171 _TR1	=	0x008e
+                           00008F   172 _TF1	=	0x008f
+                           000090   173 _P1_0	=	0x0090
+                           000091   174 _P1_1	=	0x0091
+                           000092   175 _P1_2	=	0x0092
+                           000093   176 _P1_3	=	0x0093
+                           000094   177 _P1_4	=	0x0094
+                           000095   178 _P1_5	=	0x0095
+                           000096   179 _P1_6	=	0x0096
+                           000097   180 _P1_7	=	0x0097
+                           000098   181 _RI	=	0x0098
+                           000099   182 _TI	=	0x0099
+                           00009A   183 _RB8	=	0x009a
+                           00009B   184 _TB8	=	0x009b
+                           00009C   185 _REN	=	0x009c
+                           00009D   186 _SM2	=	0x009d
+                           00009E   187 _SM1	=	0x009e
+                           00009F   188 _SM0	=	0x009f
+                           0000A0   189 _P2_0	=	0x00a0
+                           0000A1   190 _P2_1	=	0x00a1
+                           0000A2   191 _P2_2	=	0x00a2
+                           0000A3   192 _P2_3	=	0x00a3
+                           0000A4   193 _P2_4	=	0x00a4
+                           0000A5   194 _P2_5	=	0x00a5
+                           0000A6   195 _P2_6	=	0x00a6
+                           0000A7   196 _P2_7	=	0x00a7
+                           0000A8   197 _EX0	=	0x00a8
+                           0000A9   198 _ET0	=	0x00a9
+                           0000AA   199 _EX1	=	0x00aa
+                           0000AB   200 _ET1	=	0x00ab
+                           0000AC   201 _ES	=	0x00ac
+                           0000AF   202 _EA	=	0x00af
+                           0000B0   203 _P3_0	=	0x00b0
+                           0000B1   204 _P3_1	=	0x00b1
+                           0000B2   205 _P3_2	=	0x00b2
+                           0000B3   206 _P3_3	=	0x00b3
+                           0000B4   207 _P3_4	=	0x00b4
+                           0000B5   208 _P3_5	=	0x00b5
+                           0000B6   209 _P3_6	=	0x00b6
+                           0000B7   210 _P3_7	=	0x00b7
+                           0000B0   211 _RXD	=	0x00b0
+                           0000B1   212 _TXD	=	0x00b1
+                           0000B2   213 _INT0	=	0x00b2
+                           0000B3   214 _INT1	=	0x00b3
+                           0000B4   215 _T0	=	0x00b4
+                           0000B5   216 _T1	=	0x00b5
+                           0000B6   217 _WR	=	0x00b6
+                           0000B7   218 _RD	=	0x00b7
+                           0000B8   219 _PX0	=	0x00b8
+                           0000B9   220 _PT0	=	0x00b9
+                           0000BA   221 _PX1	=	0x00ba
+                           0000BB   222 _PT1	=	0x00bb
+                           0000BC   223 _PS	=	0x00bc
+                           0000D0   224 _P	=	0x00d0
+                           0000D1   225 _F1	=	0x00d1
+                           0000D2   226 _OV	=	0x00d2
+                           0000D3   227 _RS0	=	0x00d3
+                           0000D4   228 _RS1	=	0x00d4
+                           0000D5   229 _F0	=	0x00d5
+                           0000D6   230 _AC	=	0x00d6
+                           0000D7   231 _CY	=	0x00d7
+                                    232 ;--------------------------------------------------------
+                                    233 ; overlayable register banks
+                                    234 ;--------------------------------------------------------
+                                    235 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        236 	.ds 8
+                                    237 	.area REG_BANK_1	(REL,OVR,DATA)
+      000000                        238 	.ds 8
+                                    239 	.area REG_BANK_2	(REL,OVR,DATA)
+      000000                        240 	.ds 8
+                                    241 ;--------------------------------------------------------
+                                    242 ; overlayable bit register bank
+                                    243 ;--------------------------------------------------------
+                                    244 	.area BIT_BANK	(REL,OVR,DATA)
+      000000                        245 bits:
+      000000                        246 	.ds 1
+                           008000   247 	b0 = bits[0]
+                           008100   248 	b1 = bits[1]
+                           008200   249 	b2 = bits[2]
+                           008300   250 	b3 = bits[3]
+                           008400   251 	b4 = bits[4]
+                           008500   252 	b5 = bits[5]
+                           008600   253 	b6 = bits[6]
+                           008700   254 	b7 = bits[7]
+                                    255 ;--------------------------------------------------------
+                                    256 ; internal ram data
+                                    257 ;--------------------------------------------------------
+                                    258 	.area DSEG    (DATA)
+      000000                        259 _key::
+      000000                        260 	.ds 1
+      000001                        261 _mode::
+      000001                        262 	.ds 1
+      000002                        263 _show::
+      000002                        264 	.ds 4
+      000006                        265 _replay_point::
+      000006                        266 	.ds 1
+      000007                        267 _replay_lengh::
+      000007                        268 	.ds 2
+      000009                        269 _play_tone::
+      000009                        270 	.ds 2
+      00000B                        271 _timer__count_65537_11:
+      00000B                        272 	.ds 1
+                                    273 ;--------------------------------------------------------
+                                    274 ; overlayable items in internal ram
+                                    275 ;--------------------------------------------------------
+                                    276 	.area	OSEG    (OVR,DATA)
+                                    277 ;--------------------------------------------------------
+                                    278 ; Stack segment in internal ram
+                                    279 ;--------------------------------------------------------
+                                    280 	.area	SSEG
+      000000                        281 __start__stack:
+      000000                        282 	.ds	1
+                                    283 
+                                    284 ;--------------------------------------------------------
+                                    285 ; indirectly addressable internal ram data
+                                    286 ;--------------------------------------------------------
+                                    287 	.area ISEG    (DATA)
+                                    288 ;--------------------------------------------------------
+                                    289 ; absolute internal ram data
+                                    290 ;--------------------------------------------------------
+                                    291 	.area IABS    (ABS,DATA)
+                                    292 	.area IABS    (ABS,DATA)
+                                    293 ;--------------------------------------------------------
+                                    294 ; bit data
+                                    295 ;--------------------------------------------------------
+                                    296 	.area BSEG    (BIT)
+      000000                        297 _silence::
+      000000                        298 	.ds 1
+      000001                        299 _change::
+      000001                        300 	.ds 1
+                                    301 ;--------------------------------------------------------
+                                    302 ; paged external ram data
+                                    303 ;--------------------------------------------------------
+                                    304 	.area PSEG    (PAG,XDATA)
+                                    305 ;--------------------------------------------------------
+                                    306 ; external ram data
+                                    307 ;--------------------------------------------------------
+                                    308 	.area XSEG    (XDATA)
+      000000                        309 _record_tone::
+      000000                        310 	.ds 200
+      0000C8                        311 _record_lengh::
+      0000C8                        312 	.ds 400
+                                    313 ;--------------------------------------------------------
+                                    314 ; absolute external ram data
+                                    315 ;--------------------------------------------------------
+                                    316 	.area XABS    (ABS,XDATA)
+                                    317 ;--------------------------------------------------------
+                                    318 ; external initialized ram data
+                                    319 ;--------------------------------------------------------
+                                    320 	.area XISEG   (XDATA)
+      000000                        321 _record_ntone::
+      000000                        322 	.ds 1
+                                    323 	.area HOME    (CODE)
+                                    324 	.area GSINIT0 (CODE)
+                                    325 	.area GSINIT1 (CODE)
+                                    326 	.area GSINIT2 (CODE)
+                                    327 	.area GSINIT3 (CODE)
+                                    328 	.area GSINIT4 (CODE)
+                                    329 	.area GSINIT5 (CODE)
+                                    330 	.area GSINIT  (CODE)
+                                    331 	.area GSFINAL (CODE)
+                                    332 	.area CSEG    (CODE)
+                                    333 ;--------------------------------------------------------
+                                    334 ; interrupt vector
+                                    335 ;--------------------------------------------------------
+                                    336 	.area HOME    (CODE)
+      000000                        337 __interrupt_vect:
+      000000 02r00r00         [24]  338 	ljmp	__sdcc_gsinit_startup
+      000003 32               [24]  339 	reti
+      000004                        340 	.ds	7
+      00000B 02r00r43         [24]  341 	ljmp	_timer_PLAY_tone
+      00000E                        342 	.ds	5
+      000013 32               [24]  343 	reti
+      000014                        344 	.ds	7
+      00001B 02r00r4F         [24]  345 	ljmp	_timer_
+                                    346 ;--------------------------------------------------------
+                                    347 ; global & static initialisations
+                                    348 ;--------------------------------------------------------
+                                    349 	.area HOME    (CODE)
+                                    350 	.area GSINIT  (CODE)
+                                    351 	.area GSFINAL (CODE)
+                                    352 	.area GSINIT  (CODE)
+                                    353 	.globl __sdcc_gsinit_startup
+                                    354 	.globl __sdcc_program_startup
+                                    355 	.globl __start__stack
+                                    356 	.globl __mcs51_genXINIT
+                                    357 	.globl __mcs51_genXRAMCLEAR
+                                    358 	.globl __mcs51_genRAMCLEAR
+                                    359 ;------------------------------------------------------------
+                                    360 ;Allocation info for local variables in function 'timer_'
+                                    361 ;------------------------------------------------------------
+                                    362 ;count                     Allocated with name '_timer__count_65537_11'
+                                    363 ;------------------------------------------------------------
+                                    364 ;	proj.c:74: static unsigned char count = 0;
+      000000 75*0B 00         [24]  365 	mov	_timer__count_65537_11,#0x00
+                                    366 ;	proj.c:31: unsigned char key = KP_NULL;
+      000003 75*00 11         [24]  367 	mov	_key,#0x11
+                                    368 ;	proj.c:32: unsigned char mode = MODE_RECORD;
+      000006 75*01 00         [24]  369 	mov	_mode,#0x00
+                                    370 ;	proj.c:28: __bit silence = 1;
+                                    371 ;	assignBit
+      000009 D2*00            [12]  372 	setb	_silence
+                                    373 	.area GSFINAL (CODE)
+      000000 02r00r1E         [24]  374 	ljmp	__sdcc_program_startup
+                                    375 ;--------------------------------------------------------
+                                    376 ; Home
+                                    377 ;--------------------------------------------------------
+                                    378 	.area HOME    (CODE)
+                                    379 	.area HOME    (CODE)
+      00001E                        380 __sdcc_program_startup:
+      00001E 02r01r38         [24]  381 	ljmp	_main
+                                    382 ;	return from main will return to caller
+                                    383 ;--------------------------------------------------------
+                                    384 ; code
+                                    385 ;--------------------------------------------------------
+                                    386 	.area CSEG    (CODE)
+                                    387 ;------------------------------------------------------------
+                                    388 ;Allocation info for local variables in function 'read_Keyboard'
+                                    389 ;------------------------------------------------------------
+                                    390 ;rv                        Allocated to registers r5 
+                                    391 ;c                         Allocated to registers r7 
+                                    392 ;t                         Allocated to registers r4 
+                                    393 ;------------------------------------------------------------
+                                    394 ;	proj.c:45: char read_Keyboard()  // get keyboard value
+                                    395 ;	-----------------------------------------
+                                    396 ;	 function read_Keyboard
+                                    397 ;	-----------------------------------------
+      000000                        398 _read_Keyboard:
+                           000007   399 	ar7 = 0x07
+                           000006   400 	ar6 = 0x06
+                           000005   401 	ar5 = 0x05
+                           000004   402 	ar4 = 0x04
+                           000003   403 	ar3 = 0x03
+                           000002   404 	ar2 = 0x02
+                           000001   405 	ar1 = 0x01
+                           000000   406 	ar0 = 0x00
+                                    407 ;	proj.c:49: for(char c=0; c<4; c++){ // scan keyboard and get value
+      000000 7F 00            [12]  408 	mov	r7,#0x00
+      000002 7E 00            [12]  409 	mov	r6,#0x00
+      000004                        410 00110$:
+      000004 BE 04 00         [24]  411 	cjne	r6,#0x04,00139$
+      000007                        412 00139$:
+      000007 50 36            [24]  413 	jnc	00105$
+                                    414 ;	proj.c:50: KB_PORT = Inputchar[c];
+      000009 EE               [12]  415 	mov	a,r6
+      00000A 90r00r2A         [24]  416 	mov	dptr,#_read_Keyboard_Inputchar_65536_1
+      00000D 93               [24]  417 	movc	a,@a+dptr
+      00000E F5 80            [12]  418 	mov	_P0,a
+                                    419 ;	proj.c:51: rv = ~(KB_PORT % 16); //input
+      000010 74 0F            [12]  420 	mov	a,#0x0f
+      000012 55 80            [12]  421 	anl	a,_P0
+      000014 F4               [12]  422 	cpl	a
+      000015 FD               [12]  423 	mov	r5,a
+                                    424 ;	proj.c:52: for(char t=0; t<4;t++){
+      000016 7C 00            [12]  425 	mov	r4,#0x00
+      000018 7B 00            [12]  426 	mov	r3,#0x00
+      00001A                        427 00107$:
+      00001A BB 04 00         [24]  428 	cjne	r3,#0x04,00141$
+      00001D                        429 00141$:
+      00001D 50 1B            [24]  430 	jnc	00111$
+                                    431 ;	proj.c:53: if(rv&1)return c * 4 + t;
+      00001F ED               [12]  432 	mov	a,r5
+      000020 30 E0 0E         [24]  433 	jnb	acc.0,00102$
+      000023 8F 02            [24]  434 	mov	ar2,r7
+      000025 EA               [12]  435 	mov	a,r2
+      000026 2A               [12]  436 	add	a,r2
+      000027 25 E0            [12]  437 	add	a,acc
+      000029 FA               [12]  438 	mov	r2,a
+      00002A 8C 01            [24]  439 	mov	ar1,r4
+      00002C E9               [12]  440 	mov	a,r1
+      00002D 2A               [12]  441 	add	a,r2
+      00002E F5 82            [12]  442 	mov	dpl,a
+      000030 22               [24]  443 	ret
+      000031                        444 00102$:
+                                    445 ;	proj.c:55: rv >>= 1;
+      000031 ED               [12]  446 	mov	a,r5
+      000032 C3               [12]  447 	clr	c
+      000033 13               [12]  448 	rrc	a
+      000034 FD               [12]  449 	mov	r5,a
+                                    450 ;	proj.c:52: for(char t=0; t<4;t++){
+      000035 0B               [12]  451 	inc	r3
+      000036 8B 04            [24]  452 	mov	ar4,r3
+      000038 80 E0            [24]  453 	sjmp	00107$
+      00003A                        454 00111$:
+                                    455 ;	proj.c:49: for(char c=0; c<4; c++){ // scan keyboard and get value
+      00003A 0E               [12]  456 	inc	r6
+      00003B 8E 07            [24]  457 	mov	ar7,r6
+      00003D 80 C5            [24]  458 	sjmp	00110$
+      00003F                        459 00105$:
+                                    460 ;	proj.c:58: return KP_NULL;
+      00003F 75 82 11         [24]  461 	mov	dpl,#0x11
+                                    462 ;	proj.c:59: }
+      000042 22               [24]  463 	ret
+                                    464 ;------------------------------------------------------------
+                                    465 ;Allocation info for local variables in function 'timer_PLAY_tone'
+                                    466 ;------------------------------------------------------------
+                                    467 ;	proj.c:61: void timer_PLAY_tone(void) __interrupt (1) __using (1){
+                                    468 ;	-----------------------------------------
+                                    469 ;	 function timer_PLAY_tone
+                                    470 ;	-----------------------------------------
+      000043                        471 _timer_PLAY_tone:
+                           00000F   472 	ar7 = 0x0f
+                           00000E   473 	ar6 = 0x0e
+                           00000D   474 	ar5 = 0x0d
+                           00000C   475 	ar4 = 0x0c
+                           00000B   476 	ar3 = 0x0b
+                           00000A   477 	ar2 = 0x0a
+                           000009   478 	ar1 = 0x09
+                           000008   479 	ar0 = 0x08
+                                    480 ;	proj.c:62: TH0 = (char)(play_tone>>8);
+      000043 85*0A 8C         [24]  481 	mov	_TH0,(_play_tone + 1)
+                                    482 ;	proj.c:63: TL0 = (char)(play_tone);
+      000046 85*09 8A         [24]  483 	mov	_TL0,_play_tone
+                                    484 ;	proj.c:64: if(!silence){
+      000049 20*00 02         [24]  485 	jb	_silence,00103$
+                                    486 ;	proj.c:65: SPEKER = !SPEKER;
+      00004C B2 97            [12]  487 	cpl	_P1_7
+      00004E                        488 00103$:
+                                    489 ;	proj.c:67: }
+      00004E 32               [24]  490 	reti
+                                    491 ;	eliminated unneeded mov psw,# (no regs used in bank)
+                                    492 ;	eliminated unneeded push/pop not_psw
+                                    493 ;	eliminated unneeded push/pop dpl
+                                    494 ;	eliminated unneeded push/pop dph
+                                    495 ;	eliminated unneeded push/pop b
+                                    496 ;	eliminated unneeded push/pop acc
+                                    497 ;------------------------------------------------------------
+                                    498 ;Allocation info for local variables in function 'timer_'
+                                    499 ;------------------------------------------------------------
+                                    500 ;count                     Allocated with name '_timer__count_65537_11'
+                                    501 ;------------------------------------------------------------
+                                    502 ;	proj.c:69: void timer_(void) __interrupt (3) __using (2){ 
+                                    503 ;	-----------------------------------------
+                                    504 ;	 function timer_
+                                    505 ;	-----------------------------------------
+      00004F                        506 _timer_:
+                           000017   507 	ar7 = 0x17
+                           000016   508 	ar6 = 0x16
+                           000015   509 	ar5 = 0x15
+                           000014   510 	ar4 = 0x14
+                           000013   511 	ar3 = 0x13
+                           000012   512 	ar2 = 0x12
+                           000011   513 	ar1 = 0x11
+                           000010   514 	ar0 = 0x10
+      00004F C0*00            [24]  515 	push	bits
+      000051 C0 E0            [24]  516 	push	acc
+      000053 C0 F0            [24]  517 	push	b
+      000055 C0 82            [24]  518 	push	dpl
+      000057 C0 83            [24]  519 	push	dph
+      000059 C0 07            [24]  520 	push	(0+7)
+      00005B C0 06            [24]  521 	push	(0+6)
+      00005D C0 05            [24]  522 	push	(0+5)
+      00005F C0 04            [24]  523 	push	(0+4)
+      000061 C0 03            [24]  524 	push	(0+3)
+      000063 C0 02            [24]  525 	push	(0+2)
+      000065 C0 01            [24]  526 	push	(0+1)
+      000067 C0 00            [24]  527 	push	(0+0)
+      000069 C0 D0            [24]  528 	push	psw
+      00006B 75 D0 10         [24]  529 	mov	psw,#0x10
+                                    530 ;	proj.c:71: Hz1(500);
+      00006E 75 8D F8         [24]  531 	mov	_TH1,#0xf8
+      000071 75 8B 30         [24]  532 	mov	_TL1,#0x30
+                                    533 ;	proj.c:77: LED_PORT_P = (LED_PORT_P & 0xF0)|index[count];
+      000074 E5 90            [12]  534 	mov	a,_P1
+      000076 54 F0            [12]  535 	anl	a,#0xf0
+      000078 FF               [12]  536 	mov	r7,a
+      000079 E5*0B            [12]  537 	mov	a,_timer__count_65537_11
+      00007B 90r00r2E         [24]  538 	mov	dptr,#_timer__index_65537_11
+      00007E 93               [24]  539 	movc	a,@a+dptr
+      00007F 4F               [12]  540 	orl	a,r7
+      000080 F5 90            [12]  541 	mov	_P1,a
+                                    542 ;	proj.c:78: LED_PORT_N = show[count];
+      000082 E5*0B            [12]  543 	mov	a,_timer__count_65537_11
+      000084 24r02            [12]  544 	add	a,#_show
+      000086 F9               [12]  545 	mov	r1,a
+      000087 87 A0            [24]  546 	mov	_P2,@r1
+                                    547 ;	proj.c:82: count = (count+1)%4;
+      000089 AE*0B            [24]  548 	mov	r6,_timer__count_65537_11
+      00008B 7F 00            [12]  549 	mov	r7,#0x00
+      00008D 8E 82            [24]  550 	mov	dpl,r6
+      00008F 8F 83            [24]  551 	mov	dph,r7
+      000091 A3               [24]  552 	inc	dptr
+      000092 75*00 04         [24]  553 	mov	__modsint_PARM_2,#0x04
+                                    554 ;	1-genFromRTrack replaced	mov	(__modsint_PARM_2 + 1),#0x00
+      000095 8F*01            [24]  555 	mov	(__modsint_PARM_2 + 1),r7
+      000097 75 D0 00         [24]  556 	mov	psw,#0x00
+      00009A 12r00r00         [24]  557 	lcall	__modsint
+      00009D 75 D0 10         [24]  558 	mov	psw,#0x10
+      0000A0 AE 82            [24]  559 	mov	r6,dpl
+      0000A2 AF 83            [24]  560 	mov	r7,dph
+                                    561 ;	proj.c:83: if(!count){
+      0000A4 EE               [12]  562 	mov	a,r6
+      0000A5 F5*0B            [12]  563 	mov	_timer__count_65537_11,a
+      0000A7 70 72            [24]  564 	jnz	00109$
+                                    565 ;	proj.c:84: switch (mode)
+      0000A9 E5*01            [12]  566 	mov	a,_mode
+      0000AB 24 FC            [12]  567 	add	a,#0xff - 0x03
+      0000AD 40 60            [24]  568 	jc	00106$
+      0000AF E5*01            [12]  569 	mov	a,_mode
+      0000B1 75 F0 03         [24]  570 	mov	b,#0x03
+      0000B4 A4               [48]  571 	mul	ab
+      0000B5 90r00rB9         [24]  572 	mov	dptr,#00121$
+      0000B8 73               [24]  573 	jmp	@a+dptr
+      0000B9                        574 00121$:
+      0000B9 02r00rC5         [24]  575 	ljmp	00101$
+      0000BC 02r00rFF         [24]  576 	ljmp	00103$
+      0000BF 02r01r07         [24]  577 	ljmp	00104$
+      0000C2 02r00rF0         [24]  578 	ljmp	00102$
+                                    579 ;	proj.c:86: case MODE_RECORD:
+      0000C5                        580 00101$:
+                                    581 ;	proj.c:87: record_lengh[record_ntone]+=2;
+      0000C5 90r00r00         [24]  582 	mov	dptr,#_record_ntone
+      0000C8 E0               [24]  583 	movx	a,@dptr
+      0000C9 75 F0 02         [24]  584 	mov	b,#0x02
+      0000CC A4               [48]  585 	mul	ab
+      0000CD 24rC8            [12]  586 	add	a,#_record_lengh
+      0000CF FE               [12]  587 	mov	r6,a
+      0000D0 74s00            [12]  588 	mov	a,#(_record_lengh >> 8)
+      0000D2 35 F0            [12]  589 	addc	a,b
+      0000D4 FF               [12]  590 	mov	r7,a
+      0000D5 8E 82            [24]  591 	mov	dpl,r6
+      0000D7 8F 83            [24]  592 	mov	dph,r7
+      0000D9 E0               [24]  593 	movx	a,@dptr
+      0000DA FC               [12]  594 	mov	r4,a
+      0000DB A3               [24]  595 	inc	dptr
+      0000DC E0               [24]  596 	movx	a,@dptr
+      0000DD FD               [12]  597 	mov	r5,a
+      0000DE 74 02            [12]  598 	mov	a,#0x02
+      0000E0 2C               [12]  599 	add	a,r4
+      0000E1 FC               [12]  600 	mov	r4,a
+      0000E2 E4               [12]  601 	clr	a
+      0000E3 3D               [12]  602 	addc	a,r5
+      0000E4 FD               [12]  603 	mov	r5,a
+      0000E5 8E 82            [24]  604 	mov	dpl,r6
+      0000E7 8F 83            [24]  605 	mov	dph,r7
+      0000E9 EC               [12]  606 	mov	a,r4
+      0000EA F0               [24]  607 	movx	@dptr,a
+      0000EB ED               [12]  608 	mov	a,r5
+      0000EC A3               [24]  609 	inc	dptr
+      0000ED F0               [24]  610 	movx	@dptr,a
+                                    611 ;	proj.c:88: break;
+                                    612 ;	proj.c:89: case MODE_PLAYFAST:
+      0000EE 80 1F            [24]  613 	sjmp	00106$
+      0000F0                        614 00102$:
+                                    615 ;	proj.c:90: replay_lengh+=2;
+      0000F0 AE*07            [24]  616 	mov	r6,_replay_lengh
+      0000F2 AF*08            [24]  617 	mov	r7,(_replay_lengh + 1)
+      0000F4 74 02            [12]  618 	mov	a,#0x02
+      0000F6 2E               [12]  619 	add	a,r6
+      0000F7 FE               [12]  620 	mov	r6,a
+      0000F8 E4               [12]  621 	clr	a
+      0000F9 3F               [12]  622 	addc	a,r7
+      0000FA FF               [12]  623 	mov	r7,a
+      0000FB 8E*07            [24]  624 	mov	_replay_lengh,r6
+      0000FD 8F*08            [24]  625 	mov	(_replay_lengh + 1),r7
+                                    626 ;	proj.c:91: case MODE_PLAY:
+      0000FF                        627 00103$:
+                                    628 ;	proj.c:92: replay_lengh++;
+      0000FF 05*07            [12]  629 	inc	_replay_lengh
+      000101 E4               [12]  630 	clr	a
+      000102 B5*07 02         [24]  631 	cjne	a,_replay_lengh,00122$
+      000105 05*08            [12]  632 	inc	(_replay_lengh + 1)
+      000107                        633 00122$:
+                                    634 ;	proj.c:93: case MODE_PLAYSLOW:
+      000107                        635 00104$:
+                                    636 ;	proj.c:94: replay_lengh++;
+      000107 05*07            [12]  637 	inc	_replay_lengh
+      000109 E4               [12]  638 	clr	a
+      00010A B5*07 02         [24]  639 	cjne	a,_replay_lengh,00123$
+      00010D 05*08            [12]  640 	inc	(_replay_lengh + 1)
+      00010F                        641 00123$:
+                                    642 ;	proj.c:98: }
+      00010F                        643 00106$:
+                                    644 ;	proj.c:100: key = read_Keyboard();
+      00010F 75 D0 00         [24]  645 	mov	psw,#0x00
+      000112 12r00r00         [24]  646 	lcall	_read_Keyboard
+      000115 75 D0 10         [24]  647 	mov	psw,#0x10
+      000118 85 82*00         [24]  648 	mov	_key,dpl
+      00011B                        649 00109$:
+                                    650 ;	proj.c:103: }
+      00011B D0 D0            [24]  651 	pop	psw
+      00011D D0 00            [24]  652 	pop	(0+0)
+      00011F D0 01            [24]  653 	pop	(0+1)
+      000121 D0 02            [24]  654 	pop	(0+2)
+      000123 D0 03            [24]  655 	pop	(0+3)
+      000125 D0 04            [24]  656 	pop	(0+4)
+      000127 D0 05            [24]  657 	pop	(0+5)
+      000129 D0 06            [24]  658 	pop	(0+6)
+      00012B D0 07            [24]  659 	pop	(0+7)
+      00012D D0 83            [24]  660 	pop	dph
+      00012F D0 82            [24]  661 	pop	dpl
+      000131 D0 F0            [24]  662 	pop	b
+      000133 D0 E0            [24]  663 	pop	acc
+      000135 D0*00            [24]  664 	pop	bits
+      000137 32               [24]  665 	reti
+                                    666 ;------------------------------------------------------------
+                                    667 ;Allocation info for local variables in function 'main'
+                                    668 ;------------------------------------------------------------
+                                    669 ;oldkey                    Allocated to registers r7 
+                                    670 ;Segshow                   Allocated to registers r5 
+                                    671 ;Segshow                   Allocated to registers r6 
+                                    672 ;------------------------------------------------------------
+                                    673 ;	proj.c:107: void main(){
+                                    674 ;	-----------------------------------------
+                                    675 ;	 function main
+                                    676 ;	-----------------------------------------
+      000138                        677 _main:
+                           000007   678 	ar7 = 0x07
+                           000006   679 	ar6 = 0x06
+                           000005   680 	ar5 = 0x05
+                           000004   681 	ar4 = 0x04
+                           000003   682 	ar3 = 0x03
+                           000002   683 	ar2 = 0x02
+                           000001   684 	ar1 = 0x01
+                           000000   685 	ar0 = 0x00
+                                    686 ;	proj.c:109: TMOD = 0x11;
+      000138 75 89 11         [24]  687 	mov	_TMOD,#0x11
+                                    688 ;	proj.c:110: EA = 1;
+                                    689 ;	assignBit
+      00013B D2 AF            [12]  690 	setb	_EA
+                                    691 ;	proj.c:111: ET0 = 1;
+                                    692 ;	assignBit
+      00013D D2 A9            [12]  693 	setb	_ET0
+                                    694 ;	proj.c:112: TR0 = 1;
+                                    695 ;	assignBit
+      00013F D2 8C            [12]  696 	setb	_TR0
+                                    697 ;	proj.c:113: ET1 = 1;
+                                    698 ;	assignBit
+      000141 D2 AB            [12]  699 	setb	_ET1
+                                    700 ;	proj.c:114: TR1 = 1;
+                                    701 ;	assignBit
+      000143 D2 8E            [12]  702 	setb	_TR1
+                                    703 ;	proj.c:117: unsigned char oldkey = KP_NULL;
+      000145 7F 11            [12]  704 	mov	r7,#0x11
+                                    705 ;	proj.c:118: while(1){
+      000147                        706 00131$:
+                                    707 ;	proj.c:119: if(key != oldkey){
+      000147 EF               [12]  708 	mov	a,r7
+      000148 B5*00 03         [24]  709 	cjne	a,_key,00199$
+      00014B 02r01rE6         [24]  710 	ljmp	00113$
+      00014E                        711 00199$:
+                                    712 ;	proj.c:120: oldkey = key;
+      00014E AF*00            [24]  713 	mov	r7,_key
+                                    714 ;	proj.c:121: change = 1;
+                                    715 ;	assignBit
+      000150 D2*01            [12]  716 	setb	_change
+                                    717 ;	proj.c:122: switch (key)
+      000152 74 0C            [12]  718 	mov	a,#0x0c
+      000154 B5*00 02         [24]  719 	cjne	a,_key,00200$
+      000157 80 1C            [24]  720 	sjmp	00101$
+      000159                        721 00200$:
+      000159 74 0D            [12]  722 	mov	a,#0x0d
+      00015B B5*00 02         [24]  723 	cjne	a,_key,00201$
+      00015E 80 23            [24]  724 	sjmp	00102$
+      000160                        725 00201$:
+      000160 74 0E            [12]  726 	mov	a,#0x0e
+      000162 B5*00 02         [24]  727 	cjne	a,_key,00202$
+      000165 80 30            [24]  728 	sjmp	00103$
+      000167                        729 00202$:
+      000167 74 0F            [12]  730 	mov	a,#0x0f
+      000169 B5*00 02         [24]  731 	cjne	a,_key,00203$
+      00016C 80 3D            [24]  732 	sjmp	00104$
+      00016E                        733 00203$:
+      00016E 74 11            [12]  734 	mov	a,#0x11
+                                    735 ;	proj.c:124: case 0x0C:
+      000170 B5*00 54         [24]  736 	cjne	a,_key,00108$
+      000173 80 4A            [24]  737 	sjmp	00105$
+      000175                        738 00101$:
+                                    739 ;	proj.c:125: change = 0;
+                                    740 ;	assignBit
+      000175 C2*01            [12]  741 	clr	_change
+                                    742 ;	proj.c:126: mode = MODE_RECORD;
+      000177 75*01 00         [24]  743 	mov	_mode,#0x00
+                                    744 ;	proj.c:127: record_ntone = 0;
+      00017A 90r00r00         [24]  745 	mov	dptr,#_record_ntone
+      00017D E4               [12]  746 	clr	a
+      00017E F0               [24]  747 	movx	@dptr,a
+                                    748 ;	proj.c:128: silence = 1;
+                                    749 ;	assignBit
+      00017F D2*00            [12]  750 	setb	_silence
+                                    751 ;	proj.c:129: break;
+                                    752 ;	proj.c:130: case 0x0D:
+      000181 80 63            [24]  753 	sjmp	00113$
+      000183                        754 00102$:
+                                    755 ;	proj.c:131: change = 0;
+                                    756 ;	assignBit
+      000183 C2*01            [12]  757 	clr	_change
+                                    758 ;	proj.c:132: record_lengh[0] = 0;
+      000185 90r00rC8         [24]  759 	mov	dptr,#_record_lengh
+      000188 E4               [12]  760 	clr	a
+      000189 F0               [24]  761 	movx	@dptr,a
+      00018A A3               [24]  762 	inc	dptr
+      00018B F0               [24]  763 	movx	@dptr,a
+                                    764 ;	proj.c:133: mode = MODE_PLAYSLOW;
+      00018C 75*01 02         [24]  765 	mov	_mode,#0x02
+                                    766 ;	proj.c:134: replay_point = 0;
+                                    767 ;	1-genFromRTrack replaced	mov	_replay_point,#0x00
+      00018F F5*06            [12]  768 	mov	_replay_point,a
+                                    769 ;	proj.c:135: replay_lengh = 0;
+      000191 F5*07            [12]  770 	mov	_replay_lengh,a
+      000193 F5*08            [12]  771 	mov	(_replay_lengh + 1),a
+                                    772 ;	proj.c:136: break;
+                                    773 ;	proj.c:137: case 0x0E:
+      000195 80 4F            [24]  774 	sjmp	00113$
+      000197                        775 00103$:
+                                    776 ;	proj.c:138: change = 0;
+                                    777 ;	assignBit
+      000197 C2*01            [12]  778 	clr	_change
+                                    779 ;	proj.c:139: record_lengh[0] = 0;
+      000199 90r00rC8         [24]  780 	mov	dptr,#_record_lengh
+      00019C E4               [12]  781 	clr	a
+      00019D F0               [24]  782 	movx	@dptr,a
+      00019E A3               [24]  783 	inc	dptr
+      00019F F0               [24]  784 	movx	@dptr,a
+                                    785 ;	proj.c:140: mode = MODE_PLAY;
+      0001A0 75*01 01         [24]  786 	mov	_mode,#0x01
+                                    787 ;	proj.c:141: replay_point = 0;
+                                    788 ;	1-genFromRTrack replaced	mov	_replay_point,#0x00
+      0001A3 F5*06            [12]  789 	mov	_replay_point,a
+                                    790 ;	proj.c:142: replay_lengh = 0;
+      0001A5 F5*07            [12]  791 	mov	_replay_lengh,a
+      0001A7 F5*08            [12]  792 	mov	(_replay_lengh + 1),a
+                                    793 ;	proj.c:143: break;
+                                    794 ;	proj.c:144: case 0x0F:
+      0001A9 80 3B            [24]  795 	sjmp	00113$
+      0001AB                        796 00104$:
+                                    797 ;	proj.c:145: change = 0;
+                                    798 ;	assignBit
+      0001AB C2*01            [12]  799 	clr	_change
+                                    800 ;	proj.c:146: record_lengh[0] = 0;
+      0001AD 90r00rC8         [24]  801 	mov	dptr,#_record_lengh
+      0001B0 E4               [12]  802 	clr	a
+      0001B1 F0               [24]  803 	movx	@dptr,a
+      0001B2 A3               [24]  804 	inc	dptr
+      0001B3 F0               [24]  805 	movx	@dptr,a
+                                    806 ;	proj.c:147: mode = MODE_PLAYFAST;
+      0001B4 75*01 03         [24]  807 	mov	_mode,#0x03
+                                    808 ;	proj.c:148: replay_point = 0;
+                                    809 ;	1-genFromRTrack replaced	mov	_replay_point,#0x00
+      0001B7 F5*06            [12]  810 	mov	_replay_point,a
+                                    811 ;	proj.c:149: replay_lengh = 0;
+      0001B9 F5*07            [12]  812 	mov	_replay_lengh,a
+      0001BB F5*08            [12]  813 	mov	(_replay_lengh + 1),a
+                                    814 ;	proj.c:150: break;
+                                    815 ;	proj.c:151: case KP_NULL:
+      0001BD 80 27            [24]  816 	sjmp	00113$
+      0001BF                        817 00105$:
+                                    818 ;	proj.c:152: if(mode == MODE_RECORD){
+      0001BF E5*01            [12]  819 	mov	a,_mode
+      0001C1 70 23            [24]  820 	jnz	00113$
+                                    821 ;	proj.c:153: silence = 1;
+                                    822 ;	assignBit
+      0001C3 D2*00            [12]  823 	setb	_silence
+                                    824 ;	proj.c:155: break;
+                                    825 ;	proj.c:156: default:
+      0001C5 80 1F            [24]  826 	sjmp	00113$
+      0001C7                        827 00108$:
+                                    828 ;	proj.c:157: if(mode == MODE_RECORD){
+      0001C7 E5*01            [12]  829 	mov	a,_mode
+      0001C9 70 1B            [24]  830 	jnz	00113$
+                                    831 ;	proj.c:158: silence = 0;
+                                    832 ;	assignBit
+      0001CB C2*00            [12]  833 	clr	_silence
+                                    834 ;	proj.c:159: play_tone = tone[key];
+      0001CD E5*00            [12]  835 	mov	a,_key
+      0001CF 75 F0 02         [24]  836 	mov	b,#0x02
+      0001D2 A4               [48]  837 	mul	ab
+      0001D3 24r00            [12]  838 	add	a,#_tone
+      0001D5 F5 82            [12]  839 	mov	dpl,a
+      0001D7 74s00            [12]  840 	mov	a,#(_tone >> 8)
+      0001D9 35 F0            [12]  841 	addc	a,b
+      0001DB F5 83            [12]  842 	mov	dph,a
+      0001DD E4               [12]  843 	clr	a
+      0001DE 93               [24]  844 	movc	a,@a+dptr
+      0001DF F5*09            [12]  845 	mov	_play_tone,a
+      0001E1 A3               [24]  846 	inc	dptr
+      0001E2 E4               [12]  847 	clr	a
+      0001E3 93               [24]  848 	movc	a,@a+dptr
+      0001E4 F5*0A            [12]  849 	mov	(_play_tone + 1),a
+                                    850 ;	proj.c:162: }
+      0001E6                        851 00113$:
+                                    852 ;	proj.c:164: if(mode == MODE_RECORD){
+      0001E6 E5*01            [12]  853 	mov	a,_mode
+      0001E8 60 03            [24]  854 	jz	00207$
+      0001EA 02r02rEA         [24]  855 	ljmp	00128$
+      0001ED                        856 00207$:
+                                    857 ;	proj.c:165: unsigned char Segshow = MAX_RECORD-record_ntone;
+      0001ED 90r00r00         [24]  858 	mov	dptr,#_record_ntone
+      0001F0 E0               [24]  859 	movx	a,@dptr
+      0001F1 FE               [12]  860 	mov	r6,a
+      0001F2 FD               [12]  861 	mov	r5,a
+      0001F3 74 C8            [12]  862 	mov	a,#0xc8
+      0001F5 C3               [12]  863 	clr	c
+      0001F6 9D               [12]  864 	subb	a,r5
+      0001F7 FD               [12]  865 	mov	r5,a
+                                    866 ;	proj.c:166: show[3] = decode[10];
+      0001F8 90r00r24         [24]  867 	mov	dptr,#(_decode + 0x000a)
+      0001FB E4               [12]  868 	clr	a
+      0001FC 93               [24]  869 	movc	a,@a+dptr
+      0001FD FC               [12]  870 	mov	r4,a
+      0001FE 8C*05            [24]  871 	mov	(_show + 0x0003),r4
+                                    872 ;	proj.c:167: show[2] = decode[(Segshow/100)%10];
+      000200 7C 00            [12]  873 	mov	r4,#0x00
+      000202 75*00 64         [24]  874 	mov	__divsint_PARM_2,#0x64
+                                    875 ;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
+      000205 8C*01            [24]  876 	mov	(__divsint_PARM_2 + 1),r4
+      000207 8D 82            [24]  877 	mov	dpl,r5
+      000209 8C 83            [24]  878 	mov	dph,r4
+      00020B C0 07            [24]  879 	push	ar7
+      00020D C0 06            [24]  880 	push	ar6
+      00020F C0 05            [24]  881 	push	ar5
+      000211 C0 04            [24]  882 	push	ar4
+      000213 12r00r00         [24]  883 	lcall	__divsint
+      000216 75*00 0A         [24]  884 	mov	__modsint_PARM_2,#0x0a
+      000219 75*01 00         [24]  885 	mov	(__modsint_PARM_2 + 1),#0x00
+      00021C 12r00r00         [24]  886 	lcall	__modsint
+      00021F AA 82            [24]  887 	mov	r2,dpl
+      000221 AB 83            [24]  888 	mov	r3,dph
+      000223 D0 04            [24]  889 	pop	ar4
+      000225 D0 05            [24]  890 	pop	ar5
+      000227 EA               [12]  891 	mov	a,r2
+      000228 24r1A            [12]  892 	add	a,#_decode
+      00022A F5 82            [12]  893 	mov	dpl,a
+      00022C EB               [12]  894 	mov	a,r3
+      00022D 34s00            [12]  895 	addc	a,#(_decode >> 8)
+      00022F F5 83            [12]  896 	mov	dph,a
+      000231 E4               [12]  897 	clr	a
+      000232 93               [24]  898 	movc	a,@a+dptr
+      000233 FB               [12]  899 	mov	r3,a
+      000234 8B*04            [24]  900 	mov	(_show + 0x0002),r3
+                                    901 ;	proj.c:168: show[1] = decode[(Segshow/10)%10];
+      000236 75*00 0A         [24]  902 	mov	__divsint_PARM_2,#0x0a
+      000239 75*01 00         [24]  903 	mov	(__divsint_PARM_2 + 1),#0x00
+      00023C 8D 82            [24]  904 	mov	dpl,r5
+      00023E 8C 83            [24]  905 	mov	dph,r4
+      000240 C0 05            [24]  906 	push	ar5
+      000242 C0 04            [24]  907 	push	ar4
+      000244 12r00r00         [24]  908 	lcall	__divsint
+      000247 75*00 0A         [24]  909 	mov	__modsint_PARM_2,#0x0a
+      00024A 75*01 00         [24]  910 	mov	(__modsint_PARM_2 + 1),#0x00
+      00024D 12r00r00         [24]  911 	lcall	__modsint
+      000250 AA 82            [24]  912 	mov	r2,dpl
+      000252 AB 83            [24]  913 	mov	r3,dph
+      000254 D0 04            [24]  914 	pop	ar4
+      000256 D0 05            [24]  915 	pop	ar5
+      000258 EA               [12]  916 	mov	a,r2
+      000259 24r1A            [12]  917 	add	a,#_decode
+      00025B F5 82            [12]  918 	mov	dpl,a
+      00025D EB               [12]  919 	mov	a,r3
+      00025E 34s00            [12]  920 	addc	a,#(_decode >> 8)
+      000260 F5 83            [12]  921 	mov	dph,a
+      000262 E4               [12]  922 	clr	a
+      000263 93               [24]  923 	movc	a,@a+dptr
+      000264 FB               [12]  924 	mov	r3,a
+      000265 8B*03            [24]  925 	mov	(_show + 0x0001),r3
+                                    926 ;	proj.c:169: show[0] = decode[Segshow%10];
+      000267 75*00 0A         [24]  927 	mov	__modsint_PARM_2,#0x0a
+      00026A 75*01 00         [24]  928 	mov	(__modsint_PARM_2 + 1),#0x00
+      00026D 8D 82            [24]  929 	mov	dpl,r5
+      00026F 8C 83            [24]  930 	mov	dph,r4
+      000271 12r00r00         [24]  931 	lcall	__modsint
+      000274 AC 82            [24]  932 	mov	r4,dpl
+      000276 AD 83            [24]  933 	mov	r5,dph
+      000278 D0 06            [24]  934 	pop	ar6
+      00027A D0 07            [24]  935 	pop	ar7
+      00027C EC               [12]  936 	mov	a,r4
+      00027D 24r1A            [12]  937 	add	a,#_decode
+      00027F F5 82            [12]  938 	mov	dpl,a
+      000281 ED               [12]  939 	mov	a,r5
+      000282 34s00            [12]  940 	addc	a,#(_decode >> 8)
+      000284 F5 83            [12]  941 	mov	dph,a
+      000286 E4               [12]  942 	clr	a
+      000287 93               [24]  943 	movc	a,@a+dptr
+      000288 FD               [12]  944 	mov	r5,a
+      000289 8D*02            [24]  945 	mov	_show,r5
+                                    946 ;	proj.c:171: if(record_lengh[record_ntone] > 65500)change = 1;
+      00028B EE               [12]  947 	mov	a,r6
+      00028C 75 F0 02         [24]  948 	mov	b,#0x02
+      00028F A4               [48]  949 	mul	ab
+      000290 24rC8            [12]  950 	add	a,#_record_lengh
+      000292 F5 82            [12]  951 	mov	dpl,a
+      000294 74s00            [12]  952 	mov	a,#(_record_lengh >> 8)
+      000296 35 F0            [12]  953 	addc	a,b
+      000298 F5 83            [12]  954 	mov	dph,a
+      00029A E0               [24]  955 	movx	a,@dptr
+      00029B FD               [12]  956 	mov	r5,a
+      00029C A3               [24]  957 	inc	dptr
+      00029D E0               [24]  958 	movx	a,@dptr
+      00029E FE               [12]  959 	mov	r6,a
+      00029F C3               [12]  960 	clr	c
+      0002A0 74 DC            [12]  961 	mov	a,#0xdc
+      0002A2 9D               [12]  962 	subb	a,r5
+      0002A3 74 FF            [12]  963 	mov	a,#0xff
+      0002A5 9E               [12]  964 	subb	a,r6
+      0002A6 50 02            [24]  965 	jnc	00115$
+                                    966 ;	assignBit
+      0002A8 D2*01            [12]  967 	setb	_change
+      0002AA                        968 00115$:
+                                    969 ;	proj.c:172: if(change){
+      0002AA 20*01 03         [24]  970 	jb	_change,00209$
+      0002AD 02r01r47         [24]  971 	ljmp	00131$
+      0002B0                        972 00209$:
+                                    973 ;	proj.c:173: record_ntone++;
+      0002B0 90r00r00         [24]  974 	mov	dptr,#_record_ntone
+      0002B3 E0               [24]  975 	movx	a,@dptr
+      0002B4 24 01            [12]  976 	add	a,#0x01
+      0002B6 F0               [24]  977 	movx	@dptr,a
+                                    978 ;	proj.c:174: if(record_ntone == MAX_RECORD){
+      0002B7 E0               [24]  979 	movx	a,@dptr
+      0002B8 FE               [12]  980 	mov	r6,a
+      0002B9 BE C8 06         [24]  981 	cjne	r6,#0xc8,00117$
+                                    982 ;	proj.c:175: mode = MODE_PLAY;
+      0002BC 75*01 01         [24]  983 	mov	_mode,#0x01
+                                    984 ;	proj.c:176: continue;
+      0002BF 02r01r47         [24]  985 	ljmp	00131$
+      0002C2                        986 00117$:
+                                    987 ;	proj.c:178: record_tone[record_ntone] = key;
+      0002C2 EE               [12]  988 	mov	a,r6
+      0002C3 24r00            [12]  989 	add	a,#_record_tone
+      0002C5 F5 82            [12]  990 	mov	dpl,a
+      0002C7 E4               [12]  991 	clr	a
+      0002C8 34s00            [12]  992 	addc	a,#(_record_tone >> 8)
+      0002CA F5 83            [12]  993 	mov	dph,a
+      0002CC E5*00            [12]  994 	mov	a,_key
+      0002CE F0               [24]  995 	movx	@dptr,a
+                                    996 ;	proj.c:179: record_lengh[record_ntone] = 0;
+      0002CF 90r00r00         [24]  997 	mov	dptr,#_record_ntone
+      0002D2 E0               [24]  998 	movx	a,@dptr
+      0002D3 75 F0 02         [24]  999 	mov	b,#0x02
+      0002D6 A4               [48] 1000 	mul	ab
+      0002D7 24rC8            [12] 1001 	add	a,#_record_lengh
+      0002D9 F5 82            [12] 1002 	mov	dpl,a
+      0002DB 74s00            [12] 1003 	mov	a,#(_record_lengh >> 8)
+      0002DD 35 F0            [12] 1004 	addc	a,b
+      0002DF F5 83            [12] 1005 	mov	dph,a
+      0002E1 E4               [12] 1006 	clr	a
+      0002E2 F0               [24] 1007 	movx	@dptr,a
+      0002E3 A3               [24] 1008 	inc	dptr
+      0002E4 F0               [24] 1009 	movx	@dptr,a
+                                   1010 ;	proj.c:180: change = 0;
+                                   1011 ;	assignBit
+      0002E5 C2*01            [12] 1012 	clr	_change
+      0002E7 02r01r47         [24] 1013 	ljmp	00131$
+      0002EA                       1014 00128$:
+                                   1015 ;	proj.c:184: if(replay_lengh >= record_lengh[replay_point]){
+      0002EA E5*06            [12] 1016 	mov	a,_replay_point
+      0002EC 75 F0 02         [24] 1017 	mov	b,#0x02
+      0002EF A4               [48] 1018 	mul	ab
+      0002F0 24rC8            [12] 1019 	add	a,#_record_lengh
+      0002F2 F5 82            [12] 1020 	mov	dpl,a
+      0002F4 74s00            [12] 1021 	mov	a,#(_record_lengh >> 8)
+      0002F6 35 F0            [12] 1022 	addc	a,b
+      0002F8 F5 83            [12] 1023 	mov	dph,a
+      0002FA E0               [24] 1024 	movx	a,@dptr
+      0002FB FD               [12] 1025 	mov	r5,a
+      0002FC A3               [24] 1026 	inc	dptr
+      0002FD E0               [24] 1027 	movx	a,@dptr
+      0002FE FE               [12] 1028 	mov	r6,a
+      0002FF C3               [12] 1029 	clr	c
+      000300 E5*07            [12] 1030 	mov	a,_replay_lengh
+      000302 9D               [12] 1031 	subb	a,r5
+      000303 E5*08            [12] 1032 	mov	a,(_replay_lengh + 1)
+      000305 9E               [12] 1033 	subb	a,r6
+      000306 40 3E            [24] 1034 	jc	00126$
+                                   1035 ;	proj.c:185: replay_lengh = 0;
+      000308 E4               [12] 1036 	clr	a
+      000309 F5*07            [12] 1037 	mov	_replay_lengh,a
+      00030B F5*08            [12] 1038 	mov	(_replay_lengh + 1),a
+                                   1039 ;	proj.c:186: replay_point++;
+      00030D 05*06            [12] 1040 	inc	_replay_point
+                                   1041 ;	proj.c:187: if(replay_point == record_ntone) replay_point = 0;
+      00030F 90r00r00         [24] 1042 	mov	dptr,#_record_ntone
+      000312 E0               [24] 1043 	movx	a,@dptr
+      000313 B5*06 03         [24] 1044 	cjne	a,_replay_point,00121$
+      000316 75*06 00         [24] 1045 	mov	_replay_point,#0x00
+      000319                       1046 00121$:
+                                   1047 ;	proj.c:188: play_tone = tone[record_tone[replay_point]];
+      000319 E5*06            [12] 1048 	mov	a,_replay_point
+      00031B 24r00            [12] 1049 	add	a,#_record_tone
+      00031D F5 82            [12] 1050 	mov	dpl,a
+      00031F E4               [12] 1051 	clr	a
+      000320 34s00            [12] 1052 	addc	a,#(_record_tone >> 8)
+      000322 F5 83            [12] 1053 	mov	dph,a
+      000324 E0               [24] 1054 	movx	a,@dptr
+      000325 FE               [12] 1055 	mov	r6,a
+      000326 75 F0 02         [24] 1056 	mov	b,#0x02
+      000329 A4               [48] 1057 	mul	ab
+      00032A 24r00            [12] 1058 	add	a,#_tone
+      00032C F5 82            [12] 1059 	mov	dpl,a
+      00032E 74s00            [12] 1060 	mov	a,#(_tone >> 8)
+      000330 35 F0            [12] 1061 	addc	a,b
+      000332 F5 83            [12] 1062 	mov	dph,a
+      000334 E4               [12] 1063 	clr	a
+      000335 93               [24] 1064 	movc	a,@a+dptr
+      000336 F5*09            [12] 1065 	mov	_play_tone,a
+      000338 A3               [24] 1066 	inc	dptr
+      000339 E4               [12] 1067 	clr	a
+      00033A 93               [24] 1068 	movc	a,@a+dptr
+      00033B F5*0A            [12] 1069 	mov	(_play_tone + 1),a
+                                   1070 ;	proj.c:190: if(record_tone[replay_point] == KP_NULL)silence = 1;
+      00033D BE 11 04         [24] 1071 	cjne	r6,#0x11,00123$
+                                   1072 ;	assignBit
+      000340 D2*00            [12] 1073 	setb	_silence
+      000342 80 02            [24] 1074 	sjmp	00126$
+      000344                       1075 00123$:
+                                   1076 ;	proj.c:191: else silence = 0;
+                                   1077 ;	assignBit
+      000344 C2*00            [12] 1078 	clr	_silence
+      000346                       1079 00126$:
+                                   1080 ;	proj.c:193: unsigned char Segshow = record_ntone - replay_point;
+      000346 90r00r00         [24] 1081 	mov	dptr,#_record_ntone
+      000349 E0               [24] 1082 	movx	a,@dptr
+      00034A C3               [12] 1083 	clr	c
+      00034B 95*06            [12] 1084 	subb	a,_replay_point
+      00034D FE               [12] 1085 	mov	r6,a
+                                   1086 ;	proj.c:194: show[3] = decode[10+mode];
+      00034E AD*01            [24] 1087 	mov	r5,_mode
+      000350 74 0A            [12] 1088 	mov	a,#0x0a
+      000352 2D               [12] 1089 	add	a,r5
+      000353 FD               [12] 1090 	mov	r5,a
+      000354 33               [12] 1091 	rlc	a
+      000355 95 E0            [12] 1092 	subb	a,acc
+      000357 FC               [12] 1093 	mov	r4,a
+      000358 ED               [12] 1094 	mov	a,r5
+      000359 24r1A            [12] 1095 	add	a,#_decode
+      00035B F5 82            [12] 1096 	mov	dpl,a
+      00035D EC               [12] 1097 	mov	a,r4
+      00035E 34s00            [12] 1098 	addc	a,#(_decode >> 8)
+      000360 F5 83            [12] 1099 	mov	dph,a
+      000362 E4               [12] 1100 	clr	a
+      000363 93               [24] 1101 	movc	a,@a+dptr
+      000364 FD               [12] 1102 	mov	r5,a
+      000365 8D*05            [24] 1103 	mov	(_show + 0x0003),r5
+                                   1104 ;	proj.c:195: show[2] = decode[(Segshow/100)%10];
+      000367 7D 00            [12] 1105 	mov	r5,#0x00
+      000369 75*00 64         [24] 1106 	mov	__divsint_PARM_2,#0x64
+                                   1107 ;	1-genFromRTrack replaced	mov	(__divsint_PARM_2 + 1),#0x00
+      00036C 8D*01            [24] 1108 	mov	(__divsint_PARM_2 + 1),r5
+      00036E 8E 82            [24] 1109 	mov	dpl,r6
+      000370 8D 83            [24] 1110 	mov	dph,r5
+      000372 C0 07            [24] 1111 	push	ar7
+      000374 C0 06            [24] 1112 	push	ar6
+      000376 C0 05            [24] 1113 	push	ar5
+      000378 12r00r00         [24] 1114 	lcall	__divsint
+      00037B 75*00 0A         [24] 1115 	mov	__modsint_PARM_2,#0x0a
+      00037E 75*01 00         [24] 1116 	mov	(__modsint_PARM_2 + 1),#0x00
+      000381 12r00r00         [24] 1117 	lcall	__modsint
+      000384 AB 82            [24] 1118 	mov	r3,dpl
+      000386 AC 83            [24] 1119 	mov	r4,dph
+      000388 D0 05            [24] 1120 	pop	ar5
+      00038A D0 06            [24] 1121 	pop	ar6
+      00038C EB               [12] 1122 	mov	a,r3
+      00038D 24r1A            [12] 1123 	add	a,#_decode
+      00038F F5 82            [12] 1124 	mov	dpl,a
+      000391 EC               [12] 1125 	mov	a,r4
+      000392 34s00            [12] 1126 	addc	a,#(_decode >> 8)
+      000394 F5 83            [12] 1127 	mov	dph,a
+      000396 E4               [12] 1128 	clr	a
+      000397 93               [24] 1129 	movc	a,@a+dptr
+      000398 FC               [12] 1130 	mov	r4,a
+      000399 8C*04            [24] 1131 	mov	(_show + 0x0002),r4
+                                   1132 ;	proj.c:196: show[1] = decode[(Segshow/10)%10];
+      00039B 75*00 0A         [24] 1133 	mov	__divsint_PARM_2,#0x0a
+      00039E 75*01 00         [24] 1134 	mov	(__divsint_PARM_2 + 1),#0x00
+      0003A1 8E 82            [24] 1135 	mov	dpl,r6
+      0003A3 8D 83            [24] 1136 	mov	dph,r5
+      0003A5 C0 06            [24] 1137 	push	ar6
+      0003A7 C0 05            [24] 1138 	push	ar5
+      0003A9 12r00r00         [24] 1139 	lcall	__divsint
+      0003AC 75*00 0A         [24] 1140 	mov	__modsint_PARM_2,#0x0a
+      0003AF 75*01 00         [24] 1141 	mov	(__modsint_PARM_2 + 1),#0x00
+      0003B2 12r00r00         [24] 1142 	lcall	__modsint
+      0003B5 AB 82            [24] 1143 	mov	r3,dpl
+      0003B7 AC 83            [24] 1144 	mov	r4,dph
+      0003B9 D0 05            [24] 1145 	pop	ar5
+      0003BB D0 06            [24] 1146 	pop	ar6
+      0003BD EB               [12] 1147 	mov	a,r3
+      0003BE 24r1A            [12] 1148 	add	a,#_decode
+      0003C0 F5 82            [12] 1149 	mov	dpl,a
+      0003C2 EC               [12] 1150 	mov	a,r4
+      0003C3 34s00            [12] 1151 	addc	a,#(_decode >> 8)
+      0003C5 F5 83            [12] 1152 	mov	dph,a
+      0003C7 E4               [12] 1153 	clr	a
+      0003C8 93               [24] 1154 	movc	a,@a+dptr
+      0003C9 FC               [12] 1155 	mov	r4,a
+      0003CA 8C*03            [24] 1156 	mov	(_show + 0x0001),r4
+                                   1157 ;	proj.c:197: show[0] = decode[Segshow%10];
+      0003CC 75*00 0A         [24] 1158 	mov	__modsint_PARM_2,#0x0a
+      0003CF 75*01 00         [24] 1159 	mov	(__modsint_PARM_2 + 1),#0x00
+      0003D2 8E 82            [24] 1160 	mov	dpl,r6
+      0003D4 8D 83            [24] 1161 	mov	dph,r5
+      0003D6 12r00r00         [24] 1162 	lcall	__modsint
+      0003D9 AD 82            [24] 1163 	mov	r5,dpl
+      0003DB AE 83            [24] 1164 	mov	r6,dph
+      0003DD D0 07            [24] 1165 	pop	ar7
+      0003DF ED               [12] 1166 	mov	a,r5
+      0003E0 24r1A            [12] 1167 	add	a,#_decode
+      0003E2 F5 82            [12] 1168 	mov	dpl,a
+      0003E4 EE               [12] 1169 	mov	a,r6
+      0003E5 34s00            [12] 1170 	addc	a,#(_decode >> 8)
+      0003E7 F5 83            [12] 1171 	mov	dph,a
+      0003E9 E4               [12] 1172 	clr	a
+      0003EA 93               [24] 1173 	movc	a,@a+dptr
+      0003EB FE               [12] 1174 	mov	r6,a
+      0003EC 8E*02            [24] 1175 	mov	_show,r6
+                                   1176 ;	proj.c:200: }
+      0003EE 02r01r47         [24] 1177 	ljmp	00131$
+                                   1178 	.area CSEG    (CODE)
+                                   1179 	.area CONST   (CODE)
+      000000                       1180 _tone:
+      000000 44 FC                 1181 	.byte #0x44, #0xfc	; 64580
+      000002 7A FC                 1182 	.byte #0x7a, #0xfc	; 64634
+      000004 AC FC                 1183 	.byte #0xac, #0xfc	; 64684
+      000006 DC FC                 1184 	.byte #0xdc, #0xfc	; 64732
+      000008 09 FD                 1185 	.byte #0x09, #0xfd	; 64777
+      00000A 34 FD                 1186 	.byte #0x34, #0xfd	; 64820
+      00000C 5C FD                 1187 	.byte #0x5c, #0xfd	; 64860
+      00000E 82 FD                 1188 	.byte #0x82, #0xfd	; 64898
+      000010 A6 FD                 1189 	.byte #0xa6, #0xfd	; 64934
+      000012 C7 FD                 1190 	.byte #0xc7, #0xfd	; 64967
+      000014 E7 FD                 1191 	.byte #0xe7, #0xfd	; 64999
+      000016 05 FE                 1192 	.byte #0x05, #0xfe	; 65029
+      000018 00 00                 1193 	.byte #0x00, #0x00	; 0
+      00001A                       1194 _decode:
+      00001A 03                    1195 	.db #0x03	; 3
+      00001B 9F                    1196 	.db #0x9f	; 159
+      00001C 25                    1197 	.db #0x25	; 37
+      00001D 0D                    1198 	.db #0x0d	; 13
+      00001E 99                    1199 	.db #0x99	; 153
+      00001F 49                    1200 	.db #0x49	; 73	'I'
+      000020 41                    1201 	.db #0x41	; 65	'A'
+      000021 1F                    1202 	.db #0x1f	; 31
+      000022 01                    1203 	.db #0x01	; 1
+      000023 09                    1204 	.db #0x09	; 9
+      000024 6C                    1205 	.db #0x6c	; 108	'l'
+      000025 30                    1206 	.db #0x30	; 48	'0'
+      000026 E2                    1207 	.db #0xe2	; 226
+      000027 90                    1208 	.db #0x90	; 144
+      000028 25                    1209 	.db #0x25	; 37
+      000029 FF                    1210 	.db #0xff	; 255
+      00002A                       1211 _read_Keyboard_Inputchar_65536_1:
+      00002A EF                    1212 	.db #0xef	; 239
+      00002B DF                    1213 	.db #0xdf	; 223
+      00002C BF                    1214 	.db #0xbf	; 191
+      00002D 7F                    1215 	.db #0x7f	; 127
+      00002E                       1216 _timer__index_65537_11:
+      00002E 0E                    1217 	.db #0x0e	; 14
+      00002F 0D                    1218 	.db #0x0d	; 13
+      000030 0B                    1219 	.db #0x0b	; 11
+      000031 07                    1220 	.db #0x07	; 7
+                                   1221 	.area XINIT   (CODE)
+      000000                       1222 __xinit__record_ntone:
+      000000 00                    1223 	.db #0x00	; 0
+                                   1224 	.area CABS    (ABS,CODE)

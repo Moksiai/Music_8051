@@ -1,0 +1,644 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.2.0 #13081 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module LED_Display
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _LED_Display_PARM_3
+                                     12 	.globl _LED_Display_PARM_2
+                                     13 	.globl _led_0_to_f
+                                     14 	.globl _CY
+                                     15 	.globl _AC
+                                     16 	.globl _F0
+                                     17 	.globl _RS1
+                                     18 	.globl _RS0
+                                     19 	.globl _OV
+                                     20 	.globl _F1
+                                     21 	.globl _P
+                                     22 	.globl _PS
+                                     23 	.globl _PT1
+                                     24 	.globl _PX1
+                                     25 	.globl _PT0
+                                     26 	.globl _PX0
+                                     27 	.globl _RD
+                                     28 	.globl _WR
+                                     29 	.globl _T1
+                                     30 	.globl _T0
+                                     31 	.globl _INT1
+                                     32 	.globl _INT0
+                                     33 	.globl _TXD
+                                     34 	.globl _RXD
+                                     35 	.globl _P3_7
+                                     36 	.globl _P3_6
+                                     37 	.globl _P3_5
+                                     38 	.globl _P3_4
+                                     39 	.globl _P3_3
+                                     40 	.globl _P3_2
+                                     41 	.globl _P3_1
+                                     42 	.globl _P3_0
+                                     43 	.globl _EA
+                                     44 	.globl _ES
+                                     45 	.globl _ET1
+                                     46 	.globl _EX1
+                                     47 	.globl _ET0
+                                     48 	.globl _EX0
+                                     49 	.globl _P2_7
+                                     50 	.globl _P2_6
+                                     51 	.globl _P2_5
+                                     52 	.globl _P2_4
+                                     53 	.globl _P2_3
+                                     54 	.globl _P2_2
+                                     55 	.globl _P2_1
+                                     56 	.globl _P2_0
+                                     57 	.globl _SM0
+                                     58 	.globl _SM1
+                                     59 	.globl _SM2
+                                     60 	.globl _REN
+                                     61 	.globl _TB8
+                                     62 	.globl _RB8
+                                     63 	.globl _TI
+                                     64 	.globl _RI
+                                     65 	.globl _P1_7
+                                     66 	.globl _P1_6
+                                     67 	.globl _P1_5
+                                     68 	.globl _P1_4
+                                     69 	.globl _P1_3
+                                     70 	.globl _P1_2
+                                     71 	.globl _P1_1
+                                     72 	.globl _P1_0
+                                     73 	.globl _TF1
+                                     74 	.globl _TR1
+                                     75 	.globl _TF0
+                                     76 	.globl _TR0
+                                     77 	.globl _IE1
+                                     78 	.globl _IT1
+                                     79 	.globl _IE0
+                                     80 	.globl _IT0
+                                     81 	.globl _P0_7
+                                     82 	.globl _P0_6
+                                     83 	.globl _P0_5
+                                     84 	.globl _P0_4
+                                     85 	.globl _P0_3
+                                     86 	.globl _P0_2
+                                     87 	.globl _P0_1
+                                     88 	.globl _P0_0
+                                     89 	.globl _B
+                                     90 	.globl _ACC
+                                     91 	.globl _PSW
+                                     92 	.globl _IP
+                                     93 	.globl _P3
+                                     94 	.globl _IE
+                                     95 	.globl _P2
+                                     96 	.globl _SBUF
+                                     97 	.globl _SCON
+                                     98 	.globl _P1
+                                     99 	.globl _TH1
+                                    100 	.globl _TH0
+                                    101 	.globl _TL1
+                                    102 	.globl _TL0
+                                    103 	.globl _TMOD
+                                    104 	.globl _TCON
+                                    105 	.globl _PCON
+                                    106 	.globl _DPH
+                                    107 	.globl _DPL
+                                    108 	.globl _SP
+                                    109 	.globl _P0
+                                    110 	.globl _LED_Display
+                                    111 ;--------------------------------------------------------
+                                    112 ; special function registers
+                                    113 ;--------------------------------------------------------
+                                    114 	.area RSEG    (ABS,DATA)
+      000000                        115 	.org 0x0000
+                           000080   116 _P0	=	0x0080
+                           000081   117 _SP	=	0x0081
+                           000082   118 _DPL	=	0x0082
+                           000083   119 _DPH	=	0x0083
+                           000087   120 _PCON	=	0x0087
+                           000088   121 _TCON	=	0x0088
+                           000089   122 _TMOD	=	0x0089
+                           00008A   123 _TL0	=	0x008a
+                           00008B   124 _TL1	=	0x008b
+                           00008C   125 _TH0	=	0x008c
+                           00008D   126 _TH1	=	0x008d
+                           000090   127 _P1	=	0x0090
+                           000098   128 _SCON	=	0x0098
+                           000099   129 _SBUF	=	0x0099
+                           0000A0   130 _P2	=	0x00a0
+                           0000A8   131 _IE	=	0x00a8
+                           0000B0   132 _P3	=	0x00b0
+                           0000B8   133 _IP	=	0x00b8
+                           0000D0   134 _PSW	=	0x00d0
+                           0000E0   135 _ACC	=	0x00e0
+                           0000F0   136 _B	=	0x00f0
+                                    137 ;--------------------------------------------------------
+                                    138 ; special function bits
+                                    139 ;--------------------------------------------------------
+                                    140 	.area RSEG    (ABS,DATA)
+      000000                        141 	.org 0x0000
+                           000080   142 _P0_0	=	0x0080
+                           000081   143 _P0_1	=	0x0081
+                           000082   144 _P0_2	=	0x0082
+                           000083   145 _P0_3	=	0x0083
+                           000084   146 _P0_4	=	0x0084
+                           000085   147 _P0_5	=	0x0085
+                           000086   148 _P0_6	=	0x0086
+                           000087   149 _P0_7	=	0x0087
+                           000088   150 _IT0	=	0x0088
+                           000089   151 _IE0	=	0x0089
+                           00008A   152 _IT1	=	0x008a
+                           00008B   153 _IE1	=	0x008b
+                           00008C   154 _TR0	=	0x008c
+                           00008D   155 _TF0	=	0x008d
+                           00008E   156 _TR1	=	0x008e
+                           00008F   157 _TF1	=	0x008f
+                           000090   158 _P1_0	=	0x0090
+                           000091   159 _P1_1	=	0x0091
+                           000092   160 _P1_2	=	0x0092
+                           000093   161 _P1_3	=	0x0093
+                           000094   162 _P1_4	=	0x0094
+                           000095   163 _P1_5	=	0x0095
+                           000096   164 _P1_6	=	0x0096
+                           000097   165 _P1_7	=	0x0097
+                           000098   166 _RI	=	0x0098
+                           000099   167 _TI	=	0x0099
+                           00009A   168 _RB8	=	0x009a
+                           00009B   169 _TB8	=	0x009b
+                           00009C   170 _REN	=	0x009c
+                           00009D   171 _SM2	=	0x009d
+                           00009E   172 _SM1	=	0x009e
+                           00009F   173 _SM0	=	0x009f
+                           0000A0   174 _P2_0	=	0x00a0
+                           0000A1   175 _P2_1	=	0x00a1
+                           0000A2   176 _P2_2	=	0x00a2
+                           0000A3   177 _P2_3	=	0x00a3
+                           0000A4   178 _P2_4	=	0x00a4
+                           0000A5   179 _P2_5	=	0x00a5
+                           0000A6   180 _P2_6	=	0x00a6
+                           0000A7   181 _P2_7	=	0x00a7
+                           0000A8   182 _EX0	=	0x00a8
+                           0000A9   183 _ET0	=	0x00a9
+                           0000AA   184 _EX1	=	0x00aa
+                           0000AB   185 _ET1	=	0x00ab
+                           0000AC   186 _ES	=	0x00ac
+                           0000AF   187 _EA	=	0x00af
+                           0000B0   188 _P3_0	=	0x00b0
+                           0000B1   189 _P3_1	=	0x00b1
+                           0000B2   190 _P3_2	=	0x00b2
+                           0000B3   191 _P3_3	=	0x00b3
+                           0000B4   192 _P3_4	=	0x00b4
+                           0000B5   193 _P3_5	=	0x00b5
+                           0000B6   194 _P3_6	=	0x00b6
+                           0000B7   195 _P3_7	=	0x00b7
+                           0000B0   196 _RXD	=	0x00b0
+                           0000B1   197 _TXD	=	0x00b1
+                           0000B2   198 _INT0	=	0x00b2
+                           0000B3   199 _INT1	=	0x00b3
+                           0000B4   200 _T0	=	0x00b4
+                           0000B5   201 _T1	=	0x00b5
+                           0000B6   202 _WR	=	0x00b6
+                           0000B7   203 _RD	=	0x00b7
+                           0000B8   204 _PX0	=	0x00b8
+                           0000B9   205 _PT0	=	0x00b9
+                           0000BA   206 _PX1	=	0x00ba
+                           0000BB   207 _PT1	=	0x00bb
+                           0000BC   208 _PS	=	0x00bc
+                           0000D0   209 _P	=	0x00d0
+                           0000D1   210 _F1	=	0x00d1
+                           0000D2   211 _OV	=	0x00d2
+                           0000D3   212 _RS0	=	0x00d3
+                           0000D4   213 _RS1	=	0x00d4
+                           0000D5   214 _F0	=	0x00d5
+                           0000D6   215 _AC	=	0x00d6
+                           0000D7   216 _CY	=	0x00d7
+                                    217 ;--------------------------------------------------------
+                                    218 ; overlayable register banks
+                                    219 ;--------------------------------------------------------
+                                    220 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        221 	.ds 8
+                                    222 ;--------------------------------------------------------
+                                    223 ; internal ram data
+                                    224 ;--------------------------------------------------------
+                                    225 	.area DSEG    (DATA)
+                                    226 ;--------------------------------------------------------
+                                    227 ; overlayable items in internal ram
+                                    228 ;--------------------------------------------------------
+                                    229 	.area	OSEG    (OVR,DATA)
+      000000                        230 _LED_Display_PARM_2:
+      000000                        231 	.ds 1
+      000001                        232 _LED_Display_PARM_3:
+      000001                        233 	.ds 1
+      000002                        234 _LED_Display_LED_65536_2:
+      000002                        235 	.ds 3
+      000005                        236 _LED_Display_i_131072_10:
+      000005                        237 	.ds 2
+                                    238 ;--------------------------------------------------------
+                                    239 ; indirectly addressable internal ram data
+                                    240 ;--------------------------------------------------------
+                                    241 	.area ISEG    (DATA)
+                                    242 ;--------------------------------------------------------
+                                    243 ; absolute internal ram data
+                                    244 ;--------------------------------------------------------
+                                    245 	.area IABS    (ABS,DATA)
+                                    246 	.area IABS    (ABS,DATA)
+                                    247 ;--------------------------------------------------------
+                                    248 ; bit data
+                                    249 ;--------------------------------------------------------
+                                    250 	.area BSEG    (BIT)
+                                    251 ;--------------------------------------------------------
+                                    252 ; paged external ram data
+                                    253 ;--------------------------------------------------------
+                                    254 	.area PSEG    (PAG,XDATA)
+                                    255 ;--------------------------------------------------------
+                                    256 ; external ram data
+                                    257 ;--------------------------------------------------------
+                                    258 	.area XSEG    (XDATA)
+                                    259 ;--------------------------------------------------------
+                                    260 ; absolute external ram data
+                                    261 ;--------------------------------------------------------
+                                    262 	.area XABS    (ABS,XDATA)
+                                    263 ;--------------------------------------------------------
+                                    264 ; external initialized ram data
+                                    265 ;--------------------------------------------------------
+                                    266 	.area XISEG   (XDATA)
+                                    267 	.area HOME    (CODE)
+                                    268 	.area GSINIT0 (CODE)
+                                    269 	.area GSINIT1 (CODE)
+                                    270 	.area GSINIT2 (CODE)
+                                    271 	.area GSINIT3 (CODE)
+                                    272 	.area GSINIT4 (CODE)
+                                    273 	.area GSINIT5 (CODE)
+                                    274 	.area GSINIT  (CODE)
+                                    275 	.area GSFINAL (CODE)
+                                    276 	.area CSEG    (CODE)
+                                    277 ;--------------------------------------------------------
+                                    278 ; global & static initialisations
+                                    279 ;--------------------------------------------------------
+                                    280 	.area HOME    (CODE)
+                                    281 	.area GSINIT  (CODE)
+                                    282 	.area GSFINAL (CODE)
+                                    283 	.area GSINIT  (CODE)
+                                    284 ;--------------------------------------------------------
+                                    285 ; Home
+                                    286 ;--------------------------------------------------------
+                                    287 	.area HOME    (CODE)
+                                    288 	.area HOME    (CODE)
+                                    289 ;--------------------------------------------------------
+                                    290 ; code
+                                    291 ;--------------------------------------------------------
+                                    292 	.area CSEG    (CODE)
+                                    293 ;------------------------------------------------------------
+                                    294 ;Allocation info for local variables in function 'LED_Display'
+                                    295 ;------------------------------------------------------------
+                                    296 ;oldKey                    Allocated with name '_LED_Display_PARM_2'
+                                    297 ;key                       Allocated with name '_LED_Display_PARM_3'
+                                    298 ;LED                       Allocated with name '_LED_Display_LED_65536_2'
+                                    299 ;i                         Allocated to registers r3 r4 
+                                    300 ;j                         Allocated to registers r1 r2 
+                                    301 ;i                         Allocated to registers r3 r4 
+                                    302 ;j                         Allocated to registers r1 r2 
+                                    303 ;i                         Allocated to registers r3 r4 
+                                    304 ;j                         Allocated to registers r1 r2 
+                                    305 ;i                         Allocated with name '_LED_Display_i_131072_10'
+                                    306 ;j                         Allocated to registers r0 r1 
+                                    307 ;------------------------------------------------------------
+                                    308 ;	LED_Display.c:21: void LED_Display(LED_Display_struct *LED,char oldKey,char key) {
+                                    309 ;	-----------------------------------------
+                                    310 ;	 function LED_Display
+                                    311 ;	-----------------------------------------
+      000000                        312 _LED_Display:
+                           000007   313 	ar7 = 0x07
+                           000006   314 	ar6 = 0x06
+                           000005   315 	ar5 = 0x05
+                           000004   316 	ar4 = 0x04
+                           000003   317 	ar3 = 0x03
+                           000002   318 	ar2 = 0x02
+                           000001   319 	ar1 = 0x01
+                           000000   320 	ar0 = 0x00
+      000000 85 82*02         [24]  321 	mov	_LED_Display_LED_65536_2,dpl
+      000003 85 83*03         [24]  322 	mov	(_LED_Display_LED_65536_2 + 1),dph
+      000006 85 F0*04         [24]  323 	mov	(_LED_Display_LED_65536_2 + 2),b
+                                    324 ;	LED_Display.c:24: LED_PORT = ~led_0_to_f[LED->_1];
+      000009 AA*02            [24]  325 	mov	r2,_LED_Display_LED_65536_2
+      00000B AB*03            [24]  326 	mov	r3,(_LED_Display_LED_65536_2 + 1)
+      00000D AC*04            [24]  327 	mov	r4,(_LED_Display_LED_65536_2 + 2)
+      00000F 8A 82            [24]  328 	mov	dpl,r2
+      000011 8B 83            [24]  329 	mov	dph,r3
+      000013 8C F0            [24]  330 	mov	b,r4
+      000015 12r00r00         [24]  331 	lcall	__gptrget
+      000018 54 0F            [12]  332 	anl	a,#0x0f
+      00001A FA               [12]  333 	mov	r2,a
+      00001B 90r00r00         [24]  334 	mov	dptr,#_led_0_to_f
+      00001E 93               [24]  335 	movc	a,@a+dptr
+      00001F F4               [12]  336 	cpl	a
+      000020 F5 A0            [12]  337 	mov	_P2,a
+                                    338 ;	LED_Display.c:25: CONTROL_PORT = 0b0111;
+      000022 75 90 07         [24]  339 	mov	_P1,#0x07
+                                    340 ;	LED_Display.c:26: DELAY(10, 10);
+      000025 7B 00            [12]  341 	mov	r3,#0x00
+      000027 7C 00            [12]  342 	mov	r4,#0x00
+      000029                        343 00116$:
+      000029 C3               [12]  344 	clr	c
+      00002A EB               [12]  345 	mov	a,r3
+      00002B 94 0A            [12]  346 	subb	a,#0x0a
+      00002D EC               [12]  347 	mov	a,r4
+      00002E 64 80            [12]  348 	xrl	a,#0x80
+      000030 94 80            [12]  349 	subb	a,#0x80
+      000032 50 1D            [24]  350 	jnc	00102$
+      000034 79 00            [12]  351 	mov	r1,#0x00
+      000036 7A 00            [12]  352 	mov	r2,#0x00
+      000038                        353 00113$:
+      000038 C3               [12]  354 	clr	c
+      000039 E9               [12]  355 	mov	a,r1
+      00003A 94 0A            [12]  356 	subb	a,#0x0a
+      00003C EA               [12]  357 	mov	a,r2
+      00003D 64 80            [12]  358 	xrl	a,#0x80
+      00003F 94 80            [12]  359 	subb	a,#0x80
+      000041 50 07            [24]  360 	jnc	00117$
+      000043 09               [12]  361 	inc	r1
+      000044 B9 00 F1         [24]  362 	cjne	r1,#0x00,00113$
+      000047 0A               [12]  363 	inc	r2
+      000048 80 EE            [24]  364 	sjmp	00113$
+      00004A                        365 00117$:
+      00004A 0B               [12]  366 	inc	r3
+      00004B BB 00 DB         [24]  367 	cjne	r3,#0x00,00116$
+      00004E 0C               [12]  368 	inc	r4
+      00004F 80 D8            [24]  369 	sjmp	00116$
+      000051                        370 00102$:
+                                    371 ;	LED_Display.c:27: LED_PORT = ~led_0_to_f[LED->_2];
+      000051 AA*02            [24]  372 	mov	r2,_LED_Display_LED_65536_2
+      000053 AB*03            [24]  373 	mov	r3,(_LED_Display_LED_65536_2 + 1)
+      000055 AC*04            [24]  374 	mov	r4,(_LED_Display_LED_65536_2 + 2)
+      000057 8A 82            [24]  375 	mov	dpl,r2
+      000059 8B 83            [24]  376 	mov	dph,r3
+      00005B 8C F0            [24]  377 	mov	b,r4
+      00005D 12r00r00         [24]  378 	lcall	__gptrget
+      000060 C4               [12]  379 	swap	a
+      000061 54 0F            [12]  380 	anl	a,#0x0f
+      000063 FA               [12]  381 	mov	r2,a
+      000064 90r00r00         [24]  382 	mov	dptr,#_led_0_to_f
+      000067 93               [24]  383 	movc	a,@a+dptr
+      000068 F4               [12]  384 	cpl	a
+      000069 F5 A0            [12]  385 	mov	_P2,a
+                                    386 ;	LED_Display.c:28: CONTROL_PORT = 0b1011;
+      00006B 75 90 0B         [24]  387 	mov	_P1,#0x0b
+                                    388 ;	LED_Display.c:29: DELAY(10, 10);
+      00006E 7B 00            [12]  389 	mov	r3,#0x00
+      000070 7C 00            [12]  390 	mov	r4,#0x00
+      000072                        391 00122$:
+      000072 C3               [12]  392 	clr	c
+      000073 EB               [12]  393 	mov	a,r3
+      000074 94 0A            [12]  394 	subb	a,#0x0a
+      000076 EC               [12]  395 	mov	a,r4
+      000077 64 80            [12]  396 	xrl	a,#0x80
+      000079 94 80            [12]  397 	subb	a,#0x80
+      00007B 50 1D            [24]  398 	jnc	00104$
+      00007D 79 00            [12]  399 	mov	r1,#0x00
+      00007F 7A 00            [12]  400 	mov	r2,#0x00
+      000081                        401 00119$:
+      000081 C3               [12]  402 	clr	c
+      000082 E9               [12]  403 	mov	a,r1
+      000083 94 0A            [12]  404 	subb	a,#0x0a
+      000085 EA               [12]  405 	mov	a,r2
+      000086 64 80            [12]  406 	xrl	a,#0x80
+      000088 94 80            [12]  407 	subb	a,#0x80
+      00008A 50 07            [24]  408 	jnc	00123$
+      00008C 09               [12]  409 	inc	r1
+      00008D B9 00 F1         [24]  410 	cjne	r1,#0x00,00119$
+      000090 0A               [12]  411 	inc	r2
+      000091 80 EE            [24]  412 	sjmp	00119$
+      000093                        413 00123$:
+      000093 0B               [12]  414 	inc	r3
+      000094 BB 00 DB         [24]  415 	cjne	r3,#0x00,00122$
+      000097 0C               [12]  416 	inc	r4
+      000098 80 D8            [24]  417 	sjmp	00122$
+      00009A                        418 00104$:
+                                    419 ;	LED_Display.c:30: LED_PORT = ~led_0_to_f[LED->_3];
+      00009A 74 01            [12]  420 	mov	a,#0x01
+      00009C 25*02            [12]  421 	add	a,_LED_Display_LED_65536_2
+      00009E FA               [12]  422 	mov	r2,a
+      00009F E4               [12]  423 	clr	a
+      0000A0 35*03            [12]  424 	addc	a,(_LED_Display_LED_65536_2 + 1)
+      0000A2 FB               [12]  425 	mov	r3,a
+      0000A3 AC*04            [24]  426 	mov	r4,(_LED_Display_LED_65536_2 + 2)
+      0000A5 8A 82            [24]  427 	mov	dpl,r2
+      0000A7 8B 83            [24]  428 	mov	dph,r3
+      0000A9 8C F0            [24]  429 	mov	b,r4
+      0000AB 12r00r00         [24]  430 	lcall	__gptrget
+      0000AE 54 0F            [12]  431 	anl	a,#0x0f
+      0000B0 FA               [12]  432 	mov	r2,a
+      0000B1 90r00r00         [24]  433 	mov	dptr,#_led_0_to_f
+      0000B4 93               [24]  434 	movc	a,@a+dptr
+      0000B5 F4               [12]  435 	cpl	a
+      0000B6 F5 A0            [12]  436 	mov	_P2,a
+                                    437 ;	LED_Display.c:31: CONTROL_PORT = 0b1101;
+      0000B8 75 90 0D         [24]  438 	mov	_P1,#0x0d
+                                    439 ;	LED_Display.c:32: DELAY(10, 10);
+      0000BB 7B 00            [12]  440 	mov	r3,#0x00
+      0000BD 7C 00            [12]  441 	mov	r4,#0x00
+      0000BF                        442 00128$:
+      0000BF C3               [12]  443 	clr	c
+      0000C0 EB               [12]  444 	mov	a,r3
+      0000C1 94 0A            [12]  445 	subb	a,#0x0a
+      0000C3 EC               [12]  446 	mov	a,r4
+      0000C4 64 80            [12]  447 	xrl	a,#0x80
+      0000C6 94 80            [12]  448 	subb	a,#0x80
+      0000C8 50 1D            [24]  449 	jnc	00106$
+      0000CA 79 00            [12]  450 	mov	r1,#0x00
+      0000CC 7A 00            [12]  451 	mov	r2,#0x00
+      0000CE                        452 00125$:
+      0000CE C3               [12]  453 	clr	c
+      0000CF E9               [12]  454 	mov	a,r1
+      0000D0 94 0A            [12]  455 	subb	a,#0x0a
+      0000D2 EA               [12]  456 	mov	a,r2
+      0000D3 64 80            [12]  457 	xrl	a,#0x80
+      0000D5 94 80            [12]  458 	subb	a,#0x80
+      0000D7 50 07            [24]  459 	jnc	00129$
+      0000D9 09               [12]  460 	inc	r1
+      0000DA B9 00 F1         [24]  461 	cjne	r1,#0x00,00125$
+      0000DD 0A               [12]  462 	inc	r2
+      0000DE 80 EE            [24]  463 	sjmp	00125$
+      0000E0                        464 00129$:
+      0000E0 0B               [12]  465 	inc	r3
+      0000E1 BB 00 DB         [24]  466 	cjne	r3,#0x00,00128$
+      0000E4 0C               [12]  467 	inc	r4
+      0000E5 80 D8            [24]  468 	sjmp	00128$
+      0000E7                        469 00106$:
+                                    470 ;	LED_Display.c:33: LED_PORT = ~led_0_to_f[LED->_4];
+      0000E7 74 01            [12]  471 	mov	a,#0x01
+      0000E9 25*02            [12]  472 	add	a,_LED_Display_LED_65536_2
+      0000EB FA               [12]  473 	mov	r2,a
+      0000EC E4               [12]  474 	clr	a
+      0000ED 35*03            [12]  475 	addc	a,(_LED_Display_LED_65536_2 + 1)
+      0000EF FB               [12]  476 	mov	r3,a
+      0000F0 AC*04            [24]  477 	mov	r4,(_LED_Display_LED_65536_2 + 2)
+      0000F2 8A 82            [24]  478 	mov	dpl,r2
+      0000F4 8B 83            [24]  479 	mov	dph,r3
+      0000F6 8C F0            [24]  480 	mov	b,r4
+      0000F8 12r00r00         [24]  481 	lcall	__gptrget
+      0000FB C4               [12]  482 	swap	a
+      0000FC 54 0F            [12]  483 	anl	a,#0x0f
+      0000FE 90r00r00         [24]  484 	mov	dptr,#_led_0_to_f
+      000101 93               [24]  485 	movc	a,@a+dptr
+      000102 F9               [12]  486 	mov	r1,a
+      000103 F4               [12]  487 	cpl	a
+      000104 F5 A0            [12]  488 	mov	_P2,a
+                                    489 ;	LED_Display.c:34: CONTROL_PORT = 0b1110;
+      000106 75 90 0E         [24]  490 	mov	_P1,#0x0e
+                                    491 ;	LED_Display.c:35: DELAY(10, 10);
+      000109 E4               [12]  492 	clr	a
+      00010A F5*05            [12]  493 	mov	_LED_Display_i_131072_10,a
+      00010C F5*06            [12]  494 	mov	(_LED_Display_i_131072_10 + 1),a
+      00010E                        495 00134$:
+      00010E C3               [12]  496 	clr	c
+      00010F E5*05            [12]  497 	mov	a,_LED_Display_i_131072_10
+      000111 94 0A            [12]  498 	subb	a,#0x0a
+      000113 E5*06            [12]  499 	mov	a,(_LED_Display_i_131072_10 + 1)
+      000115 64 80            [12]  500 	xrl	a,#0x80
+      000117 94 80            [12]  501 	subb	a,#0x80
+      000119 50 20            [24]  502 	jnc	00108$
+      00011B 78 00            [12]  503 	mov	r0,#0x00
+      00011D 79 00            [12]  504 	mov	r1,#0x00
+      00011F                        505 00131$:
+      00011F C3               [12]  506 	clr	c
+      000120 E8               [12]  507 	mov	a,r0
+      000121 94 0A            [12]  508 	subb	a,#0x0a
+      000123 E9               [12]  509 	mov	a,r1
+      000124 64 80            [12]  510 	xrl	a,#0x80
+      000126 94 80            [12]  511 	subb	a,#0x80
+      000128 50 07            [24]  512 	jnc	00135$
+      00012A 08               [12]  513 	inc	r0
+      00012B B8 00 F1         [24]  514 	cjne	r0,#0x00,00131$
+      00012E 09               [12]  515 	inc	r1
+      00012F 80 EE            [24]  516 	sjmp	00131$
+      000131                        517 00135$:
+      000131 05*05            [12]  518 	inc	_LED_Display_i_131072_10
+      000133 E4               [12]  519 	clr	a
+      000134 B5*05 D7         [24]  520 	cjne	a,_LED_Display_i_131072_10,00134$
+      000137 05*06            [12]  521 	inc	(_LED_Display_i_131072_10 + 1)
+      000139 80 D3            [24]  522 	sjmp	00134$
+      00013B                        523 00108$:
+                                    524 ;	LED_Display.c:37: if(key != oldKey && key != 17){// shift left
+      00013B E5*00            [12]  525 	mov	a,_LED_Display_PARM_2
+      00013D B5*01 01         [24]  526 	cjne	a,_LED_Display_PARM_3,00234$
+      000140 22               [24]  527 	ret
+      000141                        528 00234$:
+      000141 74 11            [12]  529 	mov	a,#0x11
+      000143 B5*01 01         [24]  530 	cjne	a,_LED_Display_PARM_3,00235$
+      000146 22               [24]  531 	ret
+      000147                        532 00235$:
+                                    533 ;	LED_Display.c:38: LED->_4 = LED->_3;
+      000147 74 01            [12]  534 	mov	a,#0x01
+      000149 25*02            [12]  535 	add	a,_LED_Display_LED_65536_2
+      00014B F8               [12]  536 	mov	r0,a
+      00014C E4               [12]  537 	clr	a
+      00014D 35*03            [12]  538 	addc	a,(_LED_Display_LED_65536_2 + 1)
+      00014F F9               [12]  539 	mov	r1,a
+      000150 AF*04            [24]  540 	mov	r7,(_LED_Display_LED_65536_2 + 2)
+      000152 88 82            [24]  541 	mov	dpl,r0
+      000154 89 83            [24]  542 	mov	dph,r1
+      000156 8F F0            [24]  543 	mov	b,r7
+      000158 12r00r00         [24]  544 	lcall	__gptrget
+      00015B 54 0F            [12]  545 	anl	a,#0x0f
+      00015D 8A 82            [24]  546 	mov	dpl,r2
+      00015F 8B 83            [24]  547 	mov	dph,r3
+      000161 8C F0            [24]  548 	mov	b,r4
+      000163 C4               [12]  549 	swap	a
+      000164 54 F0            [12]  550 	anl	a,#(0xf0&0xf0)
+      000166 C0 F0            [24]  551 	push	b
+      000168 C0 E0            [24]  552 	push	acc
+      00016A 12r00r00         [24]  553 	lcall	__gptrget
+      00016D D0 F0            [24]  554 	pop	b
+      00016F 54 0F            [12]  555 	anl	a,#0x0f
+      000171 45 F0            [12]  556 	orl	a,b
+      000173 D0 F0            [24]  557 	pop	b
+      000175 12r00r00         [24]  558 	lcall	__gptrput
+                                    559 ;	LED_Display.c:39: LED->_3 = LED->_2;
+      000178 AC*02            [24]  560 	mov	r4,_LED_Display_LED_65536_2
+      00017A AD*03            [24]  561 	mov	r5,(_LED_Display_LED_65536_2 + 1)
+      00017C AE*04            [24]  562 	mov	r6,(_LED_Display_LED_65536_2 + 2)
+      00017E 8C 82            [24]  563 	mov	dpl,r4
+      000180 8D 83            [24]  564 	mov	dph,r5
+      000182 8E F0            [24]  565 	mov	b,r6
+      000184 12r00r00         [24]  566 	lcall	__gptrget
+      000187 C4               [12]  567 	swap	a
+      000188 54 0F            [12]  568 	anl	a,#0x0f
+      00018A 88 82            [24]  569 	mov	dpl,r0
+      00018C 89 83            [24]  570 	mov	dph,r1
+      00018E 8F F0            [24]  571 	mov	b,r7
+      000190 54 0F            [12]  572 	anl	a,#0x0f
+      000192 C0 F0            [24]  573 	push	b
+      000194 C0 E0            [24]  574 	push	acc
+      000196 12r00r00         [24]  575 	lcall	__gptrget
+      000199 D0 F0            [24]  576 	pop	b
+      00019B 54 F0            [12]  577 	anl	a,#0xf0
+      00019D 45 F0            [12]  578 	orl	a,b
+      00019F D0 F0            [24]  579 	pop	b
+      0001A1 12r00r00         [24]  580 	lcall	__gptrput
+                                    581 ;	LED_Display.c:40: LED->_2 = LED->_1;
+      0001A4 AD*02            [24]  582 	mov	r5,_LED_Display_LED_65536_2
+      0001A6 AE*03            [24]  583 	mov	r6,(_LED_Display_LED_65536_2 + 1)
+      0001A8 AF*04            [24]  584 	mov	r7,(_LED_Display_LED_65536_2 + 2)
+      0001AA AA*02            [24]  585 	mov	r2,_LED_Display_LED_65536_2
+      0001AC AB*03            [24]  586 	mov	r3,(_LED_Display_LED_65536_2 + 1)
+      0001AE AC*04            [24]  587 	mov	r4,(_LED_Display_LED_65536_2 + 2)
+      0001B0 8A 82            [24]  588 	mov	dpl,r2
+      0001B2 8B 83            [24]  589 	mov	dph,r3
+      0001B4 8C F0            [24]  590 	mov	b,r4
+      0001B6 12r00r00         [24]  591 	lcall	__gptrget
+      0001B9 54 0F            [12]  592 	anl	a,#0x0f
+      0001BB 8D 82            [24]  593 	mov	dpl,r5
+      0001BD 8E 83            [24]  594 	mov	dph,r6
+      0001BF 8F F0            [24]  595 	mov	b,r7
+      0001C1 C4               [12]  596 	swap	a
+      0001C2 54 F0            [12]  597 	anl	a,#(0xf0&0xf0)
+      0001C4 C0 F0            [24]  598 	push	b
+      0001C6 C0 E0            [24]  599 	push	acc
+      0001C8 12r00r00         [24]  600 	lcall	__gptrget
+      0001CB D0 F0            [24]  601 	pop	b
+      0001CD 54 0F            [12]  602 	anl	a,#0x0f
+      0001CF 45 F0            [12]  603 	orl	a,b
+      0001D1 D0 F0            [24]  604 	pop	b
+      0001D3 12r00r00         [24]  605 	lcall	__gptrput
+                                    606 ;	LED_Display.c:41: LED->_1 = key;
+      0001D6 AD*02            [24]  607 	mov	r5,_LED_Display_LED_65536_2
+      0001D8 AE*03            [24]  608 	mov	r6,(_LED_Display_LED_65536_2 + 1)
+      0001DA AF*04            [24]  609 	mov	r7,(_LED_Display_LED_65536_2 + 2)
+      0001DC 8D 82            [24]  610 	mov	dpl,r5
+      0001DE 8E 83            [24]  611 	mov	dph,r6
+      0001E0 8F F0            [24]  612 	mov	b,r7
+      0001E2 E5*01            [12]  613 	mov	a,_LED_Display_PARM_3
+      0001E4 54 0F            [12]  614 	anl	a,#0x0f
+      0001E6 C0 F0            [24]  615 	push	b
+      0001E8 C0 E0            [24]  616 	push	acc
+      0001EA 12r00r00         [24]  617 	lcall	__gptrget
+      0001ED D0 F0            [24]  618 	pop	b
+      0001EF 54 F0            [12]  619 	anl	a,#0xf0
+      0001F1 45 F0            [12]  620 	orl	a,b
+      0001F3 D0 F0            [24]  621 	pop	b
+                                    622 ;	LED_Display.c:46: }
+      0001F5 02r00r00         [24]  623 	ljmp	__gptrput
+                                    624 	.area CSEG    (CODE)
+                                    625 	.area CONST   (CODE)
+      000000                        626 _led_0_to_f:
+      000000 FC                     627 	.db #0xfc	; 252
+      000001 0C                     628 	.db #0x0c	; 12
+      000002 DA                     629 	.db #0xda	; 218
+      000003 F2                     630 	.db #0xf2	; 242
+      000004 66                     631 	.db #0x66	; 102	'f'
+      000005 B6                     632 	.db #0xb6	; 182
+      000006 7A                     633 	.db #0x7a	; 122	'z'
+      000007 E4                     634 	.db #0xe4	; 228
+      000008 FE                     635 	.db #0xfe	; 254
+      000009 F6                     636 	.db #0xf6	; 246
+      00000A EE                     637 	.db #0xee	; 238
+      00000B 5A                     638 	.db #0x5a	; 90	'Z'
+      00000C 9C                     639 	.db #0x9c	; 156
+      00000D 5A                     640 	.db #0x5a	; 90	'Z'
+      00000E 9E                     641 	.db #0x9e	; 158
+      00000F 8E                     642 	.db #0x8e	; 142
+                                    643 	.area XINIT   (CODE)
+                                    644 	.area CABS    (ABS,CODE)
